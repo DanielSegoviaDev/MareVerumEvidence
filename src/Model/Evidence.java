@@ -4,27 +4,60 @@ import java.util.Vector;
 
 public class Evidence {
 	
-	private Vector<Subject> subjects;
-	private String periodo;
+	private Vector<String> subjects;
+	private Vector<String> period;
+	private String path;
 	
-	public Evidence (Vector<Subject> subjects, String periodo) {
-		this.subjects = new Vector<Subject>();
+	public Evidence (Vector<String> subjects, String period, String path) {
+		this.subjects = new Vector<String>();
 		this.subjects = subjects;
-		this.periodo = periodo;
+		
+		if(period.equals("Marzo - Noviembre") || period.equals("Periodo"))
+		{
+			this.period.add("Marzo");
+			this.period.add("Abril");
+			this.period.add("Mayo");
+			this.period.add("Junio");
+			this.period.add("Julio");
+			this.period.add("Agosto");
+			this.period.add("Septiembre");
+			this.period.add("Octubre");
+			this.period.add("Noviembre");
+		} else {
+			this.period.add("Agosto");
+			this.period.add("Septiembre");
+			this.period.add("Octubre");
+			this.period.add("Noviembre");
+			this.period.add("Diciembre");
+			this.period.add("Enero");
+			this.period.add("Febrero");
+			this.period.add("Marzo");
+			this.period.add("Abril");
+		}
+		
+		this.path = path;
 		
 	}
 
-	public Vector<Subject> getSubjects() {
+	public Vector<String> getSubjects() {
 		return subjects;
 	}
 	
-	public void addSubjects(Subject subject) {
+	public void addSubjects(String subject) {
 		subjects.add(subject);
 		
 	}
 
-	public String getPeriodo() {
-		return periodo;
+	public Vector<String> getPeriod() {
+		return period;
+	}
+	
+	public String getPath() {
+		return path;
+	}
+	
+	public void setPath(String newPath) {
+		path = newPath;
 	}
 	
 	

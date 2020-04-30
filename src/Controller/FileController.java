@@ -20,6 +20,7 @@ import org.apache.poi.xslf.usermodel.XSLFSlideLayout;
 import org.apache.poi.xslf.usermodel.XSLFSlideMaster;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
 
+import Model.Evidence;
 import Model.Subject;
 
 public class FileController {
@@ -33,7 +34,13 @@ public class FileController {
 		subjects = new Vector<Subject>();
 	}
 	
-	public void newEvidence(Vector<String>period, Vector<String> subjects, String path) {
+	public void newEvidence(Evidence evidence) {
+		
+		Vector<String>period = new Vector<String>();
+		period = evidence.getPeriod();
+		Vector<String> subjects = new Vector<String>();
+		subjects = evidence.getSubjects();
+		String path = evidence.getPath();
 		
 		File file = new File(path);
 	
@@ -142,11 +149,14 @@ public class FileController {
 	
 	public boolean ReadEvidence(String path) 
 	{
-		String subject ="", month;
+		
+		//variables from the function
+		String subject ="";
 		int position = -1;
 		Vector<Integer> monthPosition = new Vector<Integer>();
 		Vector<byte[]> pictures = new Vector<byte[]>();
-		String period;
+		Vector<byte[]> subjectsPictures = new Vector<byte[]>();
+		String period = "";
 		int count = 0; 
 		
 		
@@ -159,6 +169,8 @@ public class FileController {
 				ppt = new XMLSlideShow(new FileInputStream(file));
 				List<XSLFSlide> slides = ppt.getSlides();
 				
+				
+				
 				for(int i = 0; i<= slides.size()-1; i++) {
 					XSLFSlide slide = slides.get(i);
 					
@@ -168,18 +180,27 @@ public class FileController {
 						position = slide.getSlideNumber() - 1;
 						count+=1;
 					} else {
-						month = slide.getTitle();
-						monthPosition.add(slide.getSlideNumber());
-						if( i ==  1 && month.equals("Marzo")) 
-							period = "Marzo - Noviembre";
+	
+						monthPosition.add(slide.getSlideNumber() - 1);
+						readSlideImage(pictures, subjectsPictures, slide.getSlideNumber());
 						
-						else 
-							period = " ";
+						if( i ==  1 ) {
+							if(slide.getTitle().equals("Marzo")) {
+								period = "Marzo - Noviembre";
+						
+							} else {
+								period = " ";
+							}
+						}
+						
 						count+=1;
+						
 						if (count == 10) {
-							Subject newSubject = new Subject(subject, position, monthPosition, pictures, period);
+							
+							Subject newSubject = new Subject(subject, position, monthPosition, subjectsPictures, period);
 							count = 0;
 							subjects.add(newSubject);
+							
 						}
 					 }
 						
@@ -327,6 +348,44 @@ public class FileController {
 			
 		return images;
 		
+	}
+	
+	private void readSlideImage(Vector<byte[]> images, Vector<byte[]> subjectImages, int slideNumber) {
+		
+		int limit = slideNumber % 10;
+		
+		if(limit == 0) {
+			for(int i = 0; i <= 35; i++) {
+				subjectImages.add(images.elementAt(i));
+			}
+		
+		}else if(limit == 1) { 
+		
+			for(int i = 36; i<=72; i++) {
+				subjectImages.add(images.elementAt(i));
+			}
+		
+		} else {
+			if(limit % 2 == 0) {
+				int index = (36 * limit ) + 1;
+				
+				for(int i = index; i<= index + 36; i++ ) {
+					subjectImages.add(images.elementAt(i));
+				}
+			}else {
+				
+				int index = (36 * limit ) + (limit - 1);
+				
+				for(int i = index; i<= index + 36; i++ ) {
+					subjectImages.add(images.elementAt(i));
+				}
+				
+			}
+		}
+		
+	
+	
+	
 	}
 	
 	public Vector<String> getSubjects(String path){

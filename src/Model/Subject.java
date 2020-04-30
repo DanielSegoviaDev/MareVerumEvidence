@@ -1,71 +1,71 @@
 package Model;
 
-import java.io.File;
 import java.util.Vector;
 
 public class Subject {
 	
-	private String nombre;
-	private int posicion;
-	private Vector<Integer> posicionMeses;
-	private Vector<String> meses;
-	private Vector<byte[]> fotos;
+	private String name;
+	private int position;
+	private Vector<Integer> monthPositons;
+	private Vector<String> months;
+	private Vector<byte[]> pictures;
 	
-	public Subject(String nombre, int posicion, Vector<Integer> posicionMeses, Vector<byte[]> fotos, String periodo) {
+	public Subject(String Name, int position, Vector<Integer> monthPosition, Vector<byte[]> pictures, String period) {
 		
-		this.meses = new Vector<String>();
+		this.months = new Vector<String>();
 		
-		this.nombre = nombre;
-		this.posicion = posicion;
-		this.posicionMeses = new Vector<Integer>();
-		//this.fotos = fotos;
+		this.name = Name;
+		this.position = position;
+		this.monthPositons = new Vector<Integer>();
+		this.monthPositons = monthPosition;
+		this.pictures = new Vector<byte[]>();
+		this.pictures = pictures;
 		
-		
-		if(periodo.equals("Marzo - Noviembre") || periodo.equals("Periodo"))
+		if(period.equals("Marzo - Noviembre") || period.equals("Periodo"))
 		{
-			meses.add("Marzo");
-			meses.add("Abril");
-			meses.add("Mayo");
-			meses.add("Junio");
-			meses.add("Julio");
-			meses.add("Agosto");
-			meses.add("Septiembre");
-			meses.add("Octubre");
-			meses.add("Noviembre");
+			months.add("Marzo");
+			months.add("Abril");
+			months.add("Mayo");
+			months.add("Junio");
+			months.add("Julio");
+			months.add("Agosto");
+			months.add("Septiembre");
+			months.add("Octubre");
+			months.add("Noviembre");
 		} else {
-			meses.add("Agosto");
-			meses.add("Septiembre");
-			meses.add("Octubre");
-			meses.add("Noviembre");
-			meses.add("Diciembre");
-			meses.add("Enero");
-			meses.add("Febrero");
-			meses.add("Marzo");
-			meses.add("Abril");
+			months.add("Agosto");
+			months.add("Septiembre");
+			months.add("Octubre");
+			months.add("Noviembre");
+			months.add("Diciembre");
+			months.add("Enero");
+			months.add("Febrero");
+			months.add("Marzo");
+			months.add("Abril");
 		}
 		
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public int getPosicion() {
-		return posicion;
-	}
-
-
-	public Vector<Integer> getPosicionMeses() {
-		return posicionMeses;
+	public int getPosition() {
+		return position;
 	}
 
 
-	public Vector<byte[]> getFotos() {
-		return fotos;
+	public Vector<Integer> getMonthPositions() {
+		return monthPositons;
 	}
 
-	public void setFotos(File fotos) {
-		//this.fotos = fotos;
+
+	public Vector<byte[]> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(byte[] pictureData, int index) {
+		pictures.set(index, pictureData);
 	}
 
 }
