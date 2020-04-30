@@ -21,6 +21,8 @@ public class GeneralController {
 	public void newEvidence(String period, Vector<String> Subject, String path ) 
 	
 	{
+	
+		
 		
 	}
 	
