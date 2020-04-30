@@ -1,6 +1,11 @@
 package Model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Vector;
+
+import org.apache.commons.compress.utils.IOUtils;
 
 public class Subject {
 	
@@ -9,6 +14,7 @@ public class Subject {
 	private Vector<Integer> monthPositons;
 	private Vector<String> months;
 	private Vector<byte[]> pictures;
+	private boolean flag = true;
 	
 	public Subject(String Name, int position, Vector<Integer> monthPosition, Vector<byte[]> pictures, String period) {
 		
@@ -44,6 +50,10 @@ public class Subject {
 			months.add("Abril");
 		}
 		
+		String nullOption = new String(pictures.get(0));
+		if(!nullOption.equals("null")) {
+			flag = false; 
+		}
 	}
 
 	public String getName() {
@@ -61,11 +71,42 @@ public class Subject {
 
 
 	public Vector<byte[]> getPictures() {
-		return pictures;
+		if(flag)
+			return pictures;
+		else 
+			return null;
 	}
 
 	public void setPictures(byte[] pictureData, int index) {
 		pictures.set(index, pictureData);
+	}
+	
+	public void addPictures(Vector<String> picturePath, String month) throws FileNotFoundException, IOException {
+		
+		
+		
+		// añadir el month para que se añada segun el mes las fotos
+		int monthNumber = 0;
+		for(int i = 0; i<=8; i++) {
+			if(month.equals(months.elementAt(i)))
+				monthNumber = months.indexOf(months.elementAt(i));
+		}
+		
+		int vectorPosition = monthNumber * 4 - 1;
+		String nullController = new String(pictures.elementAt(vectorPosition));
+		
+		if(nullController.equals("null")) {
+		
+			byte[] pictureData0 = IOUtils.toByteArray(new FileInputStream(picturePath.elementAt(0)));
+			byte[] pictureData1 = IOUtils.toByteArray(new FileInputStream(picturePath.elementAt(1)));
+			byte[] pictureData2 = IOUtils.toByteArray(new FileInputStream(picturePath.elementAt(2)));
+			byte[] pictureData3 = IOUtils.toByteArray(new FileInputStream(picturePath.elementAt(3)));
+			
+			pictures.add(vectorPosition, pictureData0);
+			pictures.add(vectorPosition+1,pictureData1);
+			pictures.add(vectorPosition+2, pictureData2);
+			pictures.add(vectorPosition+3, pictureData3);
+		}
 	}
 
 }

@@ -74,6 +74,7 @@ public class FileController {
 						month.setText(period.elementAt(j));
 						month.setAnchor(new Rectangle2D.Double( 28.32 * 1 , 28.32 * 0, 28.32 * 24, 28.32 * 2));
 						contentSlide.removeShape(contentSlide.getPlaceholder(1));
+
 					}
 					
 					}catch(Exception e) {
@@ -327,6 +328,54 @@ public class FileController {
 		
 	}
 	
+	public void setImages(Subject changerSubjectPicture, String path) {
+		File file = new File((path));
+		
+		try {
+			ppt = new XMLSlideShow(new FileInputStream(file));
+			
+			
+			
+		
+		//	XSLFSlide position = slides.get(changerSubjectPicture.getMonthPositions());
+			
+			
+			byte[] pictureData0 = changerSubjectPicture.getPictures().get(0);
+			byte[] pictureData1 = changerSubjectPicture.getPictures().get(1);
+			byte[] pictureData2 = changerSubjectPicture.getPictures().get(2);
+			byte[] pictureData3 = changerSubjectPicture.getPictures().get(3);
+			
+			Rectangle2D rect = new Rectangle2D.Double( 28.32 * 0 , 28.32 * 3, 28.32 * 12, 28.32 * 9);
+			Rectangle2D rect1 = new Rectangle2D.Double( 28.32 * 14 , 28.32 * 3, 28.32 * 12, 28.32 * 9);
+			Rectangle2D rect2 = new Rectangle2D.Double( 28.32 * 0 , 28.32 * 13, 28.32 * 12, 28.32 * 9);
+			Rectangle2D rect3 = new Rectangle2D.Double( 28.32 * 14 , 28.32 * 13, 28.32 * 12, 28.32 * 9);
+			
+			XSLFPictureData pd = ppt.addPicture(pictureData0, PictureData.PictureType.JPEG);
+			XSLFPictureData pd1 = ppt.addPicture(pictureData1, PictureData.PictureType.JPEG);
+			XSLFPictureData pd2 = ppt.addPicture(pictureData2, PictureData.PictureType.JPEG);
+			XSLFPictureData pd3 = ppt.addPicture(pictureData3, PictureData.PictureType.JPEG);
+			
+			/*
+			XSLFPictureShape pic = position.createPicture(pd);
+			XSLFPictureShape pic1 = position.createPicture(pd1);
+			XSLFPictureShape pic2 = position.createPicture(pd2);
+			XSLFPictureShape pic3 = position.createPicture(pd3);
+			
+			pic.setAnchor(rect);
+			pic1.setAnchor(rect1);
+			pic2.setAnchor(rect2);
+			pic3.setAnchor(rect3);
+			
+			*/
+			FileOutputStream out = new FileOutputStream(file);
+			ppt.write(out);
+			out.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public Vector<byte[]> readImages(String path) {
 		images = new Vector<byte[]>();
 		
@@ -353,31 +402,76 @@ public class FileController {
 	private void readSlideImage(Vector<byte[]> images, Vector<byte[]> subjectImages, int slideNumber) {
 		
 		int limit = slideNumber % 10;
+		int maxImages = images.size();
+		
 		
 		if(limit == 0) {
-			for(int i = 0; i <= 35; i++) {
-				subjectImages.add(images.elementAt(i));
+			
+			if(maxImages >= 35) {
+				for(int i = 0; i <= 35; i++) {
+					subjectImages.add(images.elementAt(i));
+				}
+			}else {
+				for(int i = 0; i <= 35; i++) {
+					if(i >= maxImages) {
+						subjectImages.add("null".getBytes());
+					}else {
+						subjectImages.add(images.elementAt(i));
+					}
+				}
 			}
-		
 		}else if(limit == 1) { 
-		
-			for(int i = 36; i<=72; i++) {
-				subjectImages.add(images.elementAt(i));
+			if(maxImages>=72) {
+				for(int i = 36; i<=72; i++) {
+					subjectImages.add(images.elementAt(i));
+				}
+			} else {
+				for(int i = 36; i<=72; i++) {
+					if(i >= maxImages) {
+						subjectImages.add("null".getBytes());
+					} else {
+						subjectImages.add(images.elementAt(i));
+					}
+				}
 			}
+			
 		
 		} else {
 			if(limit % 2 == 0) {
-				int index = (36 * limit ) + 1;
 				
-				for(int i = index; i<= index + 36; i++ ) {
-					subjectImages.add(images.elementAt(i));
+				int index = (36 * limit ) + 1;
+				if(maxImages>= index+36) {
+					for(int i = index; i<= index + 36; i++ ) {
+						subjectImages.add(images.elementAt(i));
+					}
+				} else {
+					
+					for(int i = index; i<= index + 36; i++ ) { 
+						if(i >= maxImages) {
+							subjectImages.add("null".getBytes());
+						} else {
+							subjectImages.add(images.elementAt(i));
+						}
+					}	
 				}
+				
 			}else {
 				
 				int index = (36 * limit ) + (limit - 1);
 				
-				for(int i = index; i<= index + 36; i++ ) {
-					subjectImages.add(images.elementAt(i));
+				if(maxImages>= index+36) {
+					for(int i = index; i<= index + 36; i++ ) {
+						subjectImages.add(images.elementAt(i));
+					}
+				} else {
+					
+					for(int i = index; i<= index + 36; i++ ) { 
+						if(i >= maxImages) {
+							subjectImages.add("null".getBytes());
+						} else {
+							subjectImages.add(images.elementAt(i));
+						}
+					}	
 				}
 				
 			}

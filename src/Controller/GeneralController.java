@@ -1,6 +1,9 @@
 package Controller;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Vector;
 
 import Model.Evidence;
@@ -10,14 +13,14 @@ public class GeneralController {
 	
 	private Vector<Evidence> evidence;
 	private Vector<Subject> subjects;
-	private FileController file;
+	private FileController fileController;
 	
 	public GeneralController() 
 	
 	{
 		evidence = new Vector<Evidence>();
 		subjects = new Vector<Subject>();
-		file = new FileController();
+		fileController = new FileController();
 	}
 	
 	public void newEvidence(String period, Vector<String> Subject, String path ) 
@@ -26,32 +29,44 @@ public class GeneralController {
 		Evidence instance = new Evidence(Subject, period, path);
 		this.evidence.add(instance);
 		
-		file.newEvidence(instance);
+		fileController.newEvidence(instance);
 		
 	}
 	
 	public void readEvidence(String path) {
 		
-		if(file.ReadEvidence(path)) {
+		if(fileController.ReadEvidence(path)) {
 			getSubjects();
+		}
+		
+	}
+	
+	public void addImages(String subject, String month, Vector<String>photoPath, String path) throws FileNotFoundException, IOException {
+		if(existEvidence(path)) {
+			int position = fileController.getMonthPosition(month, subject, path);
+			Subject selectedSubject = getSubjectForPosition(position);
+			
+			selectedSubject.addPictures(photoPath, month);
 		}
 		
 	}
 	
 	public void setPicture(byte[] pictureData, int index, String month, String subject, String path) {
 		if(existEvidence(path)) {
-			int position = file.getMonthPosition(month, subject, path);
+			int position = fileController.getMonthPosition(month, subject, path);
 			Subject changerSubjectPicture = getSubjectForPosition(position);
 			changerSubjectPicture.setPictures(pictureData, index);
+			
+			fileController.setImages(changerSubjectPicture, path);
 		}else {
-			System.out.println("Evidence dosen´t exist, please, create one");
+			System.out.println("Evidence doesn´t exist, please, create one");
 		}
 		
 	}
 	
 	
 	public void getSubjects(){
-		subjects = file.exportSubjects(); 
+		subjects = fileController.exportSubjects(); 
 	}
 	
 	public boolean existEvidence(String path) {
@@ -65,7 +80,9 @@ public class GeneralController {
 		return false;
 	}
 	
-	public Subject getSubjectForPosition(int monthPosition) {
+	
+	
+	private Subject getSubjectForPosition(int monthPosition) {
 		Vector<Integer> positions = new Vector<Integer>();
 		
 		for(int i = 0; i<= subjects.size() -1; i++) {
@@ -80,5 +97,7 @@ public class GeneralController {
 		
 		return null;
 	}
+	
+	
 	
 }
