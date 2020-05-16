@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controller.GeneralController;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -27,6 +30,7 @@ public class Menu extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static GeneralController GC;
 
 	/**
 	 * Launch the application.
@@ -53,6 +57,9 @@ public class Menu extends JFrame {
 	 * @throws ClassNotFoundException 
 	 */
 	public Menu() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		
+		 GC = new GeneralController();
+		
 		setTitle("EVIDENCIAS MARE VERUM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -85,7 +92,7 @@ public class Menu extends JFrame {
 		newEvidenceButton.setBackground(Color.LIGHT_GRAY);
 		newEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				NewEvidence evidence = new NewEvidence();
+				NewEvidence evidence = new NewEvidence(GC);
 				evidence.setVisible(true);
 				
 			}
@@ -99,7 +106,7 @@ public class Menu extends JFrame {
 		JButton editEvidenceButton = new JButton("EDITA EVIDENCIAS");
 		editEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditEvidence newE = new EditEvidence();
+				EditEvidence newE = new EditEvidence(GC);
 				newE.setVisible(true);
 			}
 		});

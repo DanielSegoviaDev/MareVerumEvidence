@@ -4,6 +4,9 @@ package UI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controller.GeneralController;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
@@ -29,7 +32,7 @@ public class EditEvidence extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EditEvidence() {
+	public EditEvidence(GeneralController GC) {
 		setTitle("EVIDENCIAS MARE VERUM || Editar evidencias");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

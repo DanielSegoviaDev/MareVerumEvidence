@@ -14,6 +14,7 @@ public class GeneralController {
 	private Vector<Evidence> evidence;
 	private Vector<Subject> subjects;
 	private FileController fileController;
+	private Vector<String> subjectVector;
 	
 	public GeneralController() 
 	
@@ -23,17 +24,19 @@ public class GeneralController {
 		fileController = new FileController();
 	}
 	
-	public void newEvidence(String period, Vector<String> Subject, String path ) 
+	public void newEvidence(String period, String path ) 
 	
 	{
-		Evidence instance = new Evidence(Subject, period, path);
+		Evidence instance = new Evidence(subjectVector, period, path);
 		this.evidence.add(instance);
 		
 		fileController.newEvidence(instance);
 		
 	}
 	
-	public void readEvidence(String path) {
+	public void readEvidence(String path) 
+	
+	{
 		
 		if(fileController.ReadEvidence(path)) {
 			getSubjects();
@@ -41,7 +44,9 @@ public class GeneralController {
 		
 	}
 	
-	public void addImages(String subject, String month, Vector<String>photoPath, String path) throws FileNotFoundException, IOException {
+	public void addImages(String subject, String month, Vector<String>photoPath, String path) throws FileNotFoundException, IOException 
+	
+	{
 		if(existEvidence(path)) {
 			int position = fileController.getMonthPosition(month, subject, path);
 			Subject selectedSubject = getSubjectForPosition(position);
@@ -51,21 +56,29 @@ public class GeneralController {
 		
 	}
 	
-	public void setPicture(byte[] pictureData, int index, String month, String subject, String path) {
+	public void setPicture(byte[] pictureData, int index, String month, String subject, String path) 
+	
+	{
+		
 		if(existEvidence(path)) {
 			int position = fileController.getMonthPosition(month, subject, path);
 			Subject changerSubjectPicture = getSubjectForPosition(position);
 			changerSubjectPicture.setPictures(pictureData, index);
 			
 			fileController.setImages(changerSubjectPicture, path);
-		}else {
+			
+		}
+		
+		else 
+		{
 			System.out.println("Evidence doesn´t exist, please, create one");
 		}
 		
 	}
 	
 	
-	public void getSubjects(){
+	public void getSubjects()
+	{
 		subjects = fileController.exportSubjects(); 
 	}
 	
@@ -96,6 +109,22 @@ public class GeneralController {
 		}
 		
 		return null;
+	}
+	
+	
+	public void getTextFromTP(String TP)	
+	
+	{
+		subjectVector = new Vector<String>();
+		
+		String[] elements = TP.split(", ");
+		
+		for(int i = 0; i <= elements.length -1; i++) 
+		{
+			subjectVector.add(elements[i]);
+		}
+		
+		
 	}
 	
 	

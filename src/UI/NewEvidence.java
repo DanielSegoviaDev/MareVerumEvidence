@@ -3,6 +3,9 @@ package UI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controller.GeneralController;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -30,12 +33,13 @@ public class NewEvidence extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField nameField;
+	private File index;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public NewEvidence() {
+	public NewEvidence(GeneralController GC) {
 		setTitle("EVIDENCIAS MARE VERUM  || Crear Evidencia");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -60,8 +64,12 @@ public class NewEvidence extends JFrame {
 		JButton subjSelectorButton = new JButton("Seleccionar Materias");
 		subjSelectorButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SubjectSelector newSelector = new SubjectSelector();
+				SubjectSelector newSelector = new SubjectSelector(GC);
 				newSelector.setVisible(true);
+				
+				
+				
+				
 			}
 		});
 		subjSelectorButton.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -116,11 +124,13 @@ public class NewEvidence extends JFrame {
 	    		//Si el usuario, pincha en aceptar
 	    		if(seleccion==JFileChooser.APPROVE_OPTION){
 	    		 
+	    			
 	    		    //Seleccionamos el fichero
-	    		    File fichero=fc.getSelectedFile();
-	    		 
-	    		    //Ecribe la ruta del fichero seleccionado en el campo de texto
-	    		    labelPath.setText(fichero.getAbsolutePath());
+	    		    index = fc.getSelectedFile();
+	    		    
+	    		    labelPath.setText(index.getAbsolutePath());
+	    		    
+	    		    
 	    		}
 	    	}});
 	    pathSelectorButton.setToolTipText("Donde se va a Guardar el archivo");
@@ -131,6 +141,7 @@ public class NewEvidence extends JFrame {
 	    constructEvidenceB.setFont(new Font("Arial Black", Font.PLAIN, 12));
 	    constructEvidenceB.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
+	    		GC.newEvidence(periodSelector.getSelectedItem() + "\\" + lblNombreDelArchivo.getText(), index.toString());
 	    	}
 	    });
 	    constructEvidenceB.setBounds(125, 225, 167, 23);
