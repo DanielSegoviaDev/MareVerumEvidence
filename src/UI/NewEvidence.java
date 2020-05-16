@@ -141,7 +141,14 @@ public class NewEvidence extends JFrame {
 	    constructEvidenceB.setFont(new Font("Arial Black", Font.PLAIN, 12));
 	    constructEvidenceB.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		GC.newEvidence(periodSelector.getSelectedItem() + "\\" + lblNombreDelArchivo.getText(), index.toString());
+	    		
+	    		System.out.println(index.getAbsolutePath());
+	    		
+	    		System.out.println("-------------------");
+	    		
+	    		System.out.println(index.getAbsolutePath() + "\\" +  nameField.getText());
+	    		
+	    		GC.newEvidence(periodSelector.getSelectedItem(), index.getAbsolutePath() + "\\" +  nameField.getText() + ".ppt");
 	    	}
 	    });
 	    constructEvidenceB.setBounds(125, 225, 167, 23);

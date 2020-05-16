@@ -9,9 +9,12 @@ public class Evidence {
 	private String path;
 	
 	public Evidence (Vector<String> subjects, String period, String path) {
+		
 		this.subjects = new Vector<String>();
 		this.subjects = subjects;
 		
+		this.period = new Vector<String>();
+			
 		if(period.equals("Marzo - Noviembre") || period.equals("Periodo"))
 		{
 			this.period.add("Marzo");
