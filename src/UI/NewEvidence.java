@@ -90,8 +90,10 @@ public class NewEvidence extends JFrame {
 	    
 	    addMouseListener(new MouseAdapter() {
 	    	public void mouseEntered(MouseEvent e) {
+	    		 ((DefaultListModel<String>) subjects.getModel()).removeAllElements();
 	    		 for(int i = 0; i <= GC.getSubjectVector().size() - 1; i++)
 	    		 { 
+	    			
 	    		    ((DefaultListModel<String>) subjects.getModel()).addElement(GC.getSubjectVector().elementAt(i));
 	    		 }
 	    	}
