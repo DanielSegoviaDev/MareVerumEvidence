@@ -9,12 +9,15 @@ import Controller.GeneralController;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.Choice;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 
 public class EditEvidence extends JFrame {
@@ -25,6 +28,7 @@ public class EditEvidence extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField ppPath;
+	private File index;
 
 	/**
 	 * Launch the application.
@@ -46,21 +50,6 @@ public class EditEvidence extends JFrame {
 		contentPane.add(ppPath);
 		ppPath.setColumns(10);
 		
-		JButton ppSelectButton = new JButton("Seleccione archivo");
-		ppSelectButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-			}
-		});
-		ppSelectButton.setFont(new Font("Arial", Font.PLAIN, 12));
-		ppSelectButton.setBounds(263, 10, 161, 23);
-		contentPane.add(ppSelectButton);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 42, 434, 2);
-		contentPane.add(separator);
-		
 		Choice subjetChoice = new Choice();
 		subjetChoice.setBounds(10, 50, 120, 20);
 		contentPane.add(subjetChoice);
@@ -80,6 +69,80 @@ public class EditEvidence extends JFrame {
 		lblMes.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		lblMes.setBounds(356, 50, 46, 20);
 		contentPane.add(lblMes);
+		
+		
+		
+		JButton ppSelectButton = new JButton("Seleccione archivo");
+		ppSelectButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//Creamos el objeto JFileChooser
+	    		JFileChooser fc=new JFileChooser();
+	    		 
+	    		//Indicamos lo que podemos seleccionar
+	    		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+	    
+	    		 
+	    		//Abrimos la ventana, guardamos la opcion seleccionada por el usuario
+	    		int selection=fc.showOpenDialog(contentPane);
+	    		 
+	    		//Si el usuario, pincha en aceptar
+	    		if(selection==JFileChooser.APPROVE_OPTION){
+	    		 
+	    			
+	    		    //Seleccionamos el fichero
+	    		    index = fc.getSelectedFile();
+	    		    
+	    		    ppPath.setText(index.getAbsolutePath());
+	    		    
+	    		    ppPath.setEditable(false);
+	    		    
+	    		    String path = index.getAbsolutePath();
+	    		    File file = new File(path);
+	    		    
+	    		    if(GC.acceptExtension(file))
+	    		    {
+	    		    	GC.readEvidence(path);
+	    		    	
+	    		    	if(GC.getEvidences().size() -1 <= 0)
+	    		    	
+	    		    	{
+	    		    		// si tenemos mas de dos evidencias que queremos modificar
+	    		    		// siempre vamos a seleccionar la misma, entoces, deberiamos hacer una funcion
+	    		    		// que lo que hace es seleccionar segun el click que le de 
+	    		    		
+	    		    		
+	    		    		Vector<String> subjects = new Vector<String>();
+	    		    		Vector<String> period = new Vector<String>();
+	    		    		
+	    		    		subjects = GC.getEvidences().elementAt(0).getSubjects();
+	    		    		period = GC.getEvidences().elementAt(0).getPeriod();
+	    		    		
+	    		    		
+	    		    		for(int i = 0; i <= subjects.size()-1; i++ ) 
+	    		    		{
+	    		    			subjetChoice.add(subjects.elementAt(i));
+	    		    		}
+	    		    		
+	    		    		for(int i = 0; i <= period.size()-1; i++)
+	    		    		{
+	    		    			mesChoice.add(period.elementAt(i));
+	    		    		}
+	    		    	}
+	    		    	
+	    		    }
+	    		    
+	    		}
+			}
+		});
+		ppSelectButton.setFont(new Font("Arial", Font.PLAIN, 12));
+		ppSelectButton.setBounds(263, 10, 161, 23);
+		contentPane.add(ppSelectButton);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(0, 42, 434, 2);
+		contentPane.add(separator);
+		
 		
 		JLabel label = new JLabel("");
 		label.setBounds(10, 127, 90, 90);

@@ -9,6 +9,7 @@ import Controller.GeneralController;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
@@ -19,6 +20,8 @@ import javax.swing.JScrollPane;
 import java.awt.Choice;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.awt.event.ActionEvent;
 
@@ -67,9 +70,6 @@ public class NewEvidence extends JFrame {
 				SubjectSelector newSelector = new SubjectSelector(GC);
 				newSelector.setVisible(true);
 				
-				
-				
-				
 			}
 		});
 		subjSelectorButton.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -77,14 +77,25 @@ public class NewEvidence extends JFrame {
 		subjSelectorButton.setBounds(14, 81, 167, 23);
 		contentPane.add(subjSelectorButton);
 		
+		
+		
 		JScrollPane s = new JScrollPane();
 	    s.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    s.setBounds(197, 71, 214, 87);
 	    contentPane.add(s);
-	    JList<String> subjets = new JList<String>();
-	    subjets.setFont(new Font("Arial Black", Font.PLAIN, 12));
-	    subjets.setToolTipText("Aqu\u00ED se muestran las materias Seleccionadas");
-	    s.setViewportView(subjets);
+	    JList<String> subjects = new JList<String>(new DefaultListModel<String>());
+	    subjects.setFont(new Font("Arial", Font.PLAIN, 15));
+	    subjects.setToolTipText("Aqu\u00ED se muestran las materias Seleccionadas");
+	    s.setViewportView(subjects);
+	    
+	    addMouseListener(new MouseAdapter() {
+	    	public void mouseEntered(MouseEvent e) {
+	    		 for(int i = 0; i <= GC.getSubjectVector().size() - 1; i++)
+	    		 { 
+	    		    ((DefaultListModel<String>) subjects.getModel()).addElement(GC.getSubjectVector().elementAt(i));
+	    		 }
+	    	}
+	    });
 	    
 	    JSeparator separator = new JSeparator();
 	    separator.setBounds(6, 44, 422, 7);
@@ -97,6 +108,7 @@ public class NewEvidence extends JFrame {
 	    periodSelector.add("Marzo - Noviembre");
 	    periodSelector.add("Agosto - Abril");
 	    contentPane.add(periodSelector);
+	  
 	    
 	    JSeparator separator_1 = new JSeparator();
 	    separator_1.setBounds(6, 184, 422, 7);
@@ -130,7 +142,7 @@ public class NewEvidence extends JFrame {
 	    		    
 	    		    labelPath.setText(index.getAbsolutePath());
 	    		    
-	    		    
+	    		   
 	    		}
 	    	}});
 	    pathSelectorButton.setToolTipText("Donde se va a Guardar el archivo");
@@ -155,7 +167,9 @@ public class NewEvidence extends JFrame {
 	    contentPane.add(constructEvidenceB);
 	    
 	 
-		
+	    
+	    
+
 		
 		
 		

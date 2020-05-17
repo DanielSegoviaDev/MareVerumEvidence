@@ -157,6 +157,9 @@ public class FileController {
 		Vector<Integer> monthPosition = new Vector<Integer>();
 		Vector<byte[]> pictures = new Vector<byte[]>();
 		Vector<byte[]> subjectsPictures = new Vector<byte[]>();
+		Vector<String> subjectNames = new Vector<String>();
+		
+		
 		String period = "";
 		int count = 0; 
 		
@@ -179,6 +182,7 @@ public class FileController {
 						XSLFTextShape titlePlaceHolder = slide.getPlaceholder(0);
 						subject = titlePlaceHolder.getText();
 						position = slide.getSlideNumber() - 1;
+						subjectNames.add(subject);
 						count+=1;
 					} else {
 	
@@ -204,8 +208,12 @@ public class FileController {
 							
 						}
 					 }
-						
+					
 				}
+				
+				GeneralController GC = GeneralController.getController();
+				GC.newInstanceOfEvidence(subjectNames, period, path);
+				
 				ppt.close();
 			
 			} catch(Exception e) {
@@ -246,6 +254,7 @@ public class FileController {
 	}
 	
 	public int getMonthPosition(String month, String subject, String path) {
+		
 		int subjectPosition = getSubjectPosition(subject, path);
 		int monthPosition = -1;
 		
@@ -482,7 +491,7 @@ public class FileController {
 	
 	}
 	
-	public Vector<String> getSubjects(String path){
+	public Vector<String> getNameSubjects(String path){
 		Vector<String> subjects = new Vector<String>();
 			File file = new File(path);
 			try {

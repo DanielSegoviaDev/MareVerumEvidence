@@ -16,13 +16,29 @@ public class GeneralController {
 	private FileController fileController;
 	private Vector<String> subjectVector;
 	
-	public GeneralController() 
+	private static GeneralController GC;
+	
+	
+	private GeneralController() 
 	
 	{
 		evidence = new Vector<Evidence>();
 		subjects = new Vector<Subject>();
 		fileController = new FileController();
+		subjectVector = new Vector<String>();
 	}
+	
+	public static GeneralController getController() {
+		if(GC == null) 
+		{
+			GC = new GeneralController();
+			
+		}
+		
+		return GC;
+		
+	}
+	
 	
 	public void newEvidence(String period, String path ) 
 	
@@ -77,7 +93,7 @@ public class GeneralController {
 	}
 	
 	
-	public void getSubjects()
+	private void getSubjects()
 	{
 		subjects = fileController.exportSubjects(); 
 	}
@@ -125,6 +141,27 @@ public class GeneralController {
 		}
 		
 		
+	}
+	
+	public Vector<String> getSubjectVector()
+	{
+		return subjectVector;
+	}
+	
+	public boolean acceptExtension (File dir) {
+        return dir.getName().endsWith(".ppt");
+    }
+	
+	
+	public void newInstanceOfEvidence(Vector<String> subjects, String period, String path) 
+	
+	{
+		Evidence instance = new Evidence(subjects, period, path);
+		this.evidence.add(instance);
+	}
+	
+	public Vector<Evidence> getEvidences(){
+		return evidence;
 	}
 	
 	

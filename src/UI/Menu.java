@@ -30,7 +30,7 @@ public class Menu extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private static GeneralController GC;
+	
 
 	/**
 	 * Launch the application.
@@ -58,7 +58,7 @@ public class Menu extends JFrame {
 	 */
 	public Menu() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		
-		 GC = new GeneralController();
+		 GeneralController GC = GeneralController.getController();
 		
 		setTitle("EVIDENCIAS MARE VERUM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
