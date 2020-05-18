@@ -58,7 +58,7 @@ public class Menu extends JFrame {
 	 */
 	public Menu() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		
-		 GeneralController GC = GeneralController.getController();
+		 final GeneralController GC = GeneralController.getController();
 		
 		setTitle("EVIDENCIAS MARE VERUM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,7 +75,7 @@ public class Menu extends JFrame {
 		lblBienvenidoDeNuevo.setBounds(129, 23, 173, 30);
 		contentPane.add(lblBienvenidoDeNuevo);
 		
-		JButton newEvidenceButton = new JButton("NUEVA \r\nEVIDENCIA");
+		final JButton newEvidenceButton = new JButton("NUEVA \r\nEVIDENCIA");
 		newEvidenceButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {

@@ -36,7 +36,7 @@ public class EditEvidence extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EditEvidence(GeneralController GC) {
+	public EditEvidence(final GeneralController GC) {
 		setTitle("EVIDENCIAS MARE VERUM || Editar evidencias");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -50,7 +50,7 @@ public class EditEvidence extends JFrame {
 		contentPane.add(ppPath);
 		ppPath.setColumns(10);
 		
-		Choice subjectChoice = new Choice();
+		final Choice subjectChoice = new Choice();
 		subjectChoice.setBounds(10, 50, 120, 20);
 		contentPane.add(subjectChoice);
 		
@@ -60,7 +60,7 @@ public class EditEvidence extends JFrame {
 		lblMateria.setBounds(136, 50, 68, 20);
 		contentPane.add(lblMateria);
 		
-		Choice mesChoice = new Choice();
+		final Choice mesChoice = new Choice();
 		mesChoice.setBounds(230, 50, 120, 20);
 		contentPane.add(mesChoice);
 		

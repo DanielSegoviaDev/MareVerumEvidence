@@ -42,7 +42,7 @@ public class NewEvidence extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewEvidence(GeneralController GC) {
+	public NewEvidence(final GeneralController GC) {
 		setTitle("EVIDENCIAS MARE VERUM  || Crear Evidencia");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -83,7 +83,7 @@ public class NewEvidence extends JFrame {
 	    s.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    s.setBounds(197, 71, 214, 87);
 	    contentPane.add(s);
-	    JList<String> subjects = new JList<String>(new DefaultListModel<String>());
+	    final JList<String> subjects = new JList<String>(new DefaultListModel<String>());
 	    subjects.setFont(new Font("Arial", Font.PLAIN, 15));
 	    subjects.setToolTipText("Aqu\u00ED se muestran las materias Seleccionadas");
 	    s.setViewportView(subjects);
@@ -103,7 +103,7 @@ public class NewEvidence extends JFrame {
 	    separator.setBounds(6, 44, 422, 7);
 	    contentPane.add(separator);
 	    
-	    Choice periodSelector = new Choice();
+	    final Choice periodSelector = new Choice();
 	    periodSelector.setFont(new Font("Arial Black", Font.PLAIN, 14));
 	    periodSelector.setBounds(14, 124, 167, 20);
 	    periodSelector.add("Periodo");
@@ -116,7 +116,7 @@ public class NewEvidence extends JFrame {
 	    separator_1.setBounds(6, 184, 422, 7);
 	    contentPane.add(separator_1);
 	    
-	    JLabel labelPath = new JLabel("Ej... C:\\Users\\User\\Documents");
+	    final JLabel labelPath = new JLabel("Ej... C:\\Users\\User\\Documents");
 	    labelPath.setFont(new Font("Arial", Font.PLAIN, 12));
 	    labelPath.setBounds(14, 194, 241, 20);
 	    contentPane.add(labelPath);

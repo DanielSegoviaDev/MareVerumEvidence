@@ -31,7 +31,7 @@ public class SubjectSelector extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SubjectSelector(GeneralController GC) {
+	public SubjectSelector(final GeneralController GC) {
 		setTitle("EVIDENCIAS MARE VERUM || Agregar materias");
 	
 		setBounds(100, 100, 450, 300);
@@ -49,7 +49,7 @@ public class SubjectSelector extends JFrame {
 		txtpnInThisSeccion.setBounds(200, 0, 234, 261);
 		contentPane.add(txtpnInThisSeccion);
 		
-		JTextPane textPaneSubjets = new JTextPane();
+		final JTextPane textPaneSubjets = new JTextPane();
 		JScrollPane s = new JScrollPane();
 	    s.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    s.setBounds(10, 11, 180, 210);
