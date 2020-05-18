@@ -58,7 +58,7 @@ public class EditImage extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,13 +67,13 @@ public class EditImage extends JFrame {
 		JLabel lblSubject = new JLabel("MATERIA");
 		lblSubject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSubject.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		lblSubject.setBounds(136, 10, 68, 20);
+		lblSubject.setBounds(136, 110, 68, 20);
 		contentPane.add(lblSubject);
 		
 		JLabel lblMonth = new JLabel("MES");
 		lblMonth.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		lblMonth.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMonth.setBounds(356, 10, 68, 20);
+		lblMonth.setBounds(356, 110, 68, 20);
 		contentPane.add(lblMonth);
 		
 		
@@ -87,7 +87,7 @@ public class EditImage extends JFrame {
 		listSubject = FC.getSubjects("C:\\Users\\elviv\\Desktop\\Elvi.ppt");
 	
 		final Choice choiceSubjects = new Choice();
-		choiceSubjects.setBounds(10, 10, 120, 20);
+		choiceSubjects.setBounds(10, 110, 120, 20);
 		for (int i = 0; i <= listSubject.size()-1;i++)
 		{
 			choiceSubjects.add(listSubject.elementAt(i));
@@ -96,9 +96,10 @@ public class EditImage extends JFrame {
 		
 		
 		//Shows list of months
+		
 		final Choice choiceMonth = new Choice();
 		Vector<String> listMonth = new Vector<String>();
-		choiceMonth.setBounds(230, 10, 120, 20);
+		choiceMonth.setBounds(230, 110, 120, 20);
 		for (int i = 0; i <=listMonth.size() -1; i++)
 		{
 			choiceMonth.add(listMonth.elementAt(i));
@@ -109,12 +110,15 @@ public class EditImage extends JFrame {
 		final JLabel lblNewLabeltext = new JLabel("Seleccione la foto que desee remplazar");
 		lblNewLabeltext.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
 		lblNewLabeltext.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabeltext.setBounds(10, 75, 414, 20);
+		lblNewLabeltext.setBounds(10, 175, 414, 20);
 		contentPane.add(lblNewLabeltext);
 		lblNewLabeltext.setVisible(false);
 		
 		FC.getSubject(choiceSubjects.getSelectedItem()); //Nos posicionamos en la materia seleccionada
 		
+		
+		//ESTOY TRABAJANDO EN ESTO
+/*		
 		byte[] img0 = FC.getSubject(choiceSubjects.getSelectedItem()).getPicture(choiceMonth.getSelectedItem(), 0);
 		byte[] img1 = FC.getSubject(choiceSubjects.getSelectedItem()).getPicture(choiceMonth.getSelectedItem(), 0);
 		byte[] img2 = FC.getSubject(choiceSubjects.getSelectedItem()).getPicture(choiceMonth.getSelectedItem(), 0);
@@ -125,6 +129,11 @@ public class EditImage extends JFrame {
 		ImageIcon imagen2 = new ImageIcon(img1);
 		ImageIcon imagen3 = new ImageIcon(img2);
 		ImageIcon imagen4 = new ImageIcon(img3);
+*/		
+		ImageIcon imagen1 = new ImageIcon("C:\\Users\\elviv\\Downloads\\Wolf.png");
+		ImageIcon imagen2 = new ImageIcon("C:\\Users\\elviv\\Downloads\\Wolf.png");
+		ImageIcon imagen3 = new ImageIcon("C:\\Users\\elviv\\Downloads\\Wolf.png");
+		ImageIcon imagen4 = new ImageIcon("C:\\Users\\elviv\\Downloads\\Wolf.png");
 		
 		
 		
@@ -154,7 +163,7 @@ public class EditImage extends JFrame {
 	    		
 			}
 		});
-		btnImage1.setBounds(10, 115, 90, 90);
+		btnImage1.setBounds(10, 215, 90, 90);
 		btnImage1.setIcon(new ImageIcon(imagen1.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage1);
 		btnImage1.setVisible(false);
@@ -186,7 +195,7 @@ public class EditImage extends JFrame {
 	    		}
 		}
 		});
-		btnImage2.setBounds(116, 115, 90, 90);
+		btnImage2.setBounds(116, 215, 90, 90);
 		btnImage2.setIcon(new ImageIcon(imagen2.getImage().getScaledInstance(btnImage2.getWidth(), btnImage2.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage2);
 		btnImage2.setVisible(false);
@@ -217,7 +226,7 @@ public class EditImage extends JFrame {
 				
 			}
 		});
-		btnImage3.setBounds(222, 115, 90, 90);
+		btnImage3.setBounds(222, 215, 90, 90);
 		btnImage3.setIcon(new ImageIcon(imagen3.getImage().getScaledInstance(btnImage3.getWidth(), btnImage3.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage3);
 		btnImage3.setVisible(false);
@@ -244,7 +253,7 @@ public class EditImage extends JFrame {
 	    		}
 			}
 		});
-		btnImage4.setBounds(334, 115, 90, 90);
+		btnImage4.setBounds(334, 215, 90, 90);
 		btnImage4.setIcon(new ImageIcon(imagen4.getImage().getScaledInstance(btnImage4.getWidth(), btnImage4.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage4);
 		btnImage4.setVisible(false);
@@ -270,7 +279,7 @@ public class EditImage extends JFrame {
 
 			}
 		});
-		btnUploadIMG.setBounds(146, 41, 140, 23);
+		btnUploadIMG.setBounds(146, 141, 140, 23);
 		contentPane.add(btnUploadIMG);
 		
 		
@@ -283,11 +292,11 @@ public class EditImage extends JFrame {
 			FC.addImages(choiceSubjects.getSelectedItem(), choiceMonth.getSelectedItem(), photoPath, "path");	
 			}
 		});
-		btnSaveChanges.setBounds(284, 227, 140, 23);
+		btnSaveChanges.setBounds(284, 327, 140, 23);
 		contentPane.add(btnSaveChanges);
 		
 		JButton btnCancel = new JButton("Cancelar");
-		btnCancel.setBounds(10, 227, 89, 23);
+		btnCancel.setBounds(10, 327, 89, 23);
 		contentPane.add(btnCancel);
 	}
 
