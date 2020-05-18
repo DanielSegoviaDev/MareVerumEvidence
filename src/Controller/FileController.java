@@ -286,8 +286,7 @@ public class FileController {
 		}
 		return monthPosition;
 	}
-		
-	
+			
 	public void addImages(String subject, String month, Vector<String>photoPath, String path) {
 		
 		File file = new File((path));
@@ -514,8 +513,44 @@ public class FileController {
 		
 		return subjects;
 	}
+
+	public Vector<String> getSubjects(String path){
+		Vector<String> subjects = new Vector<String>();
+			File file = new File(path);
+			try {
+			ppt = new XMLSlideShow(new FileInputStream(file));
+				List<XSLFSlide> slides = ppt.getSlides();
+				
+				for(int i = 0; i <= slides.size()-1; i++) {
+					XSLFSlide selectSlide = slides.get(i);
+					if(selectSlide.getTitle() == null) {
+						XSLFTextShape text = selectSlide.getPlaceholder(0);
+						subjects.add(text.getText());
+					}
+				}
+				
+				ppt.close();
+			
+			} catch (Exception e){
+				e.printStackTrace();
+			}
 		
+		return subjects;
+	}
+	
 	public Vector<Subject> exportSubjects(){
 		return subjects;
+	}
+
+	public Subject getSubject(String Name)
+	{
+		for (int i = 0; i < subjects.size() - 1; i++)
+		{
+			if (subjects.elementAt(i).getName() == Name)
+			{
+				return subjects.elementAt(i);
+			}
+		}
+		return null;
 	}
 }	

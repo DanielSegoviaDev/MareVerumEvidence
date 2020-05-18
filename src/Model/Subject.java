@@ -110,4 +110,18 @@ public class Subject {
 		}
 	}
 
+	public byte[] getPicture(String month, int imageNumber)
+	{
+		int pos = 0;
+		for(int i=0; i<=8 ; i++)
+		{
+			if(month == months.elementAt(i))
+			{
+				pos = i;
+			}
+		}
+
+		return pictures.elementAt(pos+imageNumber);
+
+	}
 }
