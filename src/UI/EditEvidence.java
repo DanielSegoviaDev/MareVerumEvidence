@@ -50,9 +50,9 @@ public class EditEvidence extends JFrame {
 		contentPane.add(ppPath);
 		ppPath.setColumns(10);
 		
-		Choice subjetChoice = new Choice();
-		subjetChoice.setBounds(10, 50, 120, 20);
-		contentPane.add(subjetChoice);
+		Choice subjectChoice = new Choice();
+		subjectChoice.setBounds(10, 50, 120, 20);
+		contentPane.add(subjectChoice);
 		
 		JLabel lblMateria = new JLabel("MATERIA");
 		lblMateria.setHorizontalAlignment(SwingConstants.CENTER);
@@ -104,24 +104,24 @@ public class EditEvidence extends JFrame {
 	    		    {
 	    		    	GC.readEvidence(path);
 	    		    	
-	    		    	if(GC.getEvidences().size() -1 <= 0)
+	    		    	int position = GC.compareEvidencePath(path);
+	    		    	
+	    		    	if(position != -1)
 	    		    	
 	    		    	{
-	    		    		// si tenemos mas de dos evidencias que queremos modificar
-	    		    		// siempre vamos a seleccionar la misma, entoces, deberiamos hacer una funcion
-	    		    		// que lo que hace es seleccionar segun el click que le de 
-	    		    		
-	    		    		
+   		
 	    		    		Vector<String> subjects = new Vector<String>();
 	    		    		Vector<String> period = new Vector<String>();
 	    		    		
-	    		    		subjects = GC.getEvidences().elementAt(0).getSubjects();
-	    		    		period = GC.getEvidences().elementAt(0).getPeriod();
+	    		    		subjects = GC.getEvidences().elementAt(position).getSubjects();
+	    		    		period = GC.getEvidences().elementAt(position).getPeriod();
 	    		    		
+	    		    		subjectChoice.removeAll();
+	    		    		mesChoice.removeAll();
 	    		    		
 	    		    		for(int i = 0; i <= subjects.size()-1; i++ ) 
 	    		    		{
-	    		    			subjetChoice.add(subjects.elementAt(i));
+	    		    			subjectChoice.add(subjects.elementAt(i));
 	    		    		}
 	    		    		
 	    		    		for(int i = 0; i <= period.size()-1; i++)
@@ -129,7 +129,7 @@ public class EditEvidence extends JFrame {
 	    		    			mesChoice.add(period.elementAt(i));
 	    		    		}
 	    		    	}
-	    		    	
+    	
 	    		    }
 	    		    
 	    		}
@@ -174,6 +174,28 @@ public class EditEvidence extends JFrame {
 		contentPane.add(cancelButton);
 		
 		JButton pickButton = new JButton("FOTOS");
+		pickButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JFileChooser fc=new JFileChooser();
+	    		 
+	    		//Indicamos lo que podemos seleccionar
+				fc.setMultiSelectionEnabled(true);
+	    		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+	    		
+	    		 
+	    		//Abrimos la ventana, guardamos la opcion seleccionada por el usuario
+	    		int selection=fc.showOpenDialog(contentPane);
+	    		 
+	    		//Si el usuario, pincha en aceptar
+	    		if(selection==JFileChooser.APPROVE_OPTION)
+	    		{
+	    			File[] images = fc.getSelectedFiles();
+	    			
+	    		} 
+				
+			}
+		});
 		pickButton.setBounds(159, 81, 89, 23);
 		contentPane.add(pickButton);
 	}

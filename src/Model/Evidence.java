@@ -7,11 +7,13 @@ public class Evidence {
 	private Vector<String> subjects;
 	private Vector<String> period;
 	private String path;
+
 	
 	public Evidence (Vector<String> subjects, String period, String path) {
 		
 		this.subjects = new Vector<String>();
 		this.subjects = subjects;
+	
 		
 		this.period = new Vector<String>();
 			
@@ -58,6 +60,7 @@ public class Evidence {
 	public String getPath() {
 		return path;
 	}
+	
 	
 	public void setPath(String newPath) {
 		path = newPath;

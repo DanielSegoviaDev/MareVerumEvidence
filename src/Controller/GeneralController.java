@@ -133,7 +133,7 @@ public class GeneralController {
 	{
 		subjectVector = new Vector<String>();
 		
-		String[] elements = TP.split(", ");
+		String[] elements = TP.split(",");
 		
 		for(int i = 0; i <= elements.length -1; i++) 
 		{
@@ -162,6 +162,17 @@ public class GeneralController {
 	
 	public Vector<Evidence> getEvidences(){
 		return evidence;
+	}
+	
+	public int compareEvidencePath(String path) {
+		
+		for(int i = 0; i <= evidence.size()-1; i++)
+		{
+			if(evidence.elementAt(i).getPath().equals(path))
+				return i;
+		}
+		
+		return -1;
 	}
 	
 	
