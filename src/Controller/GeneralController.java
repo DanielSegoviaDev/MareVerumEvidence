@@ -29,7 +29,7 @@ public class GeneralController {
 	}
 	
 	public static GeneralController getController() {
-		if(GC == null) 
+		if(GC == null)  
 		{
 			GC = new GeneralController();
 			
@@ -68,6 +68,7 @@ public class GeneralController {
 			Subject selectedSubject = getSubjectForPosition(position);
 			
 			selectedSubject.addPictures(photoPath, month);
+			fileController.addImages(subject, month, photoPath, path);
 		}
 		
 	}

@@ -84,7 +84,7 @@ public class EditImage extends JFrame {
 		//Shows list of subjects
 
 		Vector<String> listSubject = new Vector<String>();
-		listSubject = FC.getSubjects("C:\\Users\\elviv\\Desktop\\Elvi.ppt");
+		listSubject = FC.getSubjects("C:\\Users\\Daniel\\Desktop\\elvi .ppt");
 	
 		final Choice choiceSubjects = new Choice();
 		choiceSubjects.setBounds(10, 110, 120, 20);
@@ -92,7 +92,7 @@ public class EditImage extends JFrame {
 		{
 			choiceSubjects.add(listSubject.elementAt(i));
 		}
-		contentPane.add(choiceSubjects);
+		contentPane.add(choiceSubjects); 
 		
 		
 		//Shows list of months

@@ -8,15 +8,19 @@ import javax.swing.border.EmptyBorder;
 import Controller.GeneralController;
 
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Choice;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 
@@ -29,6 +33,7 @@ public class EditEvidence extends JFrame {
 	private JPanel contentPane;
 	private JTextField ppPath;
 	private File index;
+	Vector<String>photoPath;
 
 	/**
 	 * Launch the application.
@@ -37,6 +42,13 @@ public class EditEvidence extends JFrame {
 	 * Create the frame.
 	 */
 	public EditEvidence(final GeneralController GC) {
+		
+		photoPath = new Vector<String>();
+		photoPath.add("");
+		photoPath.add("");
+		photoPath.add("");
+		photoPath.add("");
+		
 		setTitle("EVIDENCIAS MARE VERUM || Editar evidencias");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -60,9 +72,9 @@ public class EditEvidence extends JFrame {
 		lblMateria.setBounds(136, 50, 68, 20);
 		contentPane.add(lblMateria);
 		
-		final Choice mesChoice = new Choice();
-		mesChoice.setBounds(230, 50, 120, 20);
-		contentPane.add(mesChoice);
+		final Choice monthChoice = new Choice();
+		monthChoice.setBounds(230, 50, 120, 20);
+		contentPane.add(monthChoice);
 		
 		JLabel lblMes = new JLabel("MES");
 		lblMes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -117,7 +129,7 @@ public class EditEvidence extends JFrame {
 	    		    		period = GC.getEvidences().elementAt(position).getPeriod();
 	    		    		
 	    		    		subjectChoice.removeAll();
-	    		    		mesChoice.removeAll();
+	    		    		monthChoice.removeAll();
 	    		    		
 	    		    		for(int i = 0; i <= subjects.size()-1; i++ ) 
 	    		    		{
@@ -126,7 +138,7 @@ public class EditEvidence extends JFrame {
 	    		    		
 	    		    		for(int i = 0; i <= period.size()-1; i++)
 	    		    		{
-	    		    			mesChoice.add(period.elementAt(i));
+	    		    			monthChoice.add(period.elementAt(i));
 	    		    		}
 	    		    	}
     	
@@ -144,23 +156,154 @@ public class EditEvidence extends JFrame {
 		contentPane.add(separator);
 		
 		
-		JLabel label = new JLabel("");
-		label.setBounds(10, 127, 90, 90);
-		contentPane.add(label);
+		ImageIcon image = new ImageIcon("imageMissing.png");
 		
-		JLabel label_1 = new JLabel("");
-		label_1.setBounds(114, 127, 90, 90);
-		contentPane.add(label_1);
 		
-		JLabel label_2 = new JLabel("");
-		label_2.setBounds(219, 127, 90, 90);
-		contentPane.add(label_2);
+		//IMAGE1
+		final JButton btnImage1 = new JButton();
 		
-		JLabel label_2_1 = new JLabel("");
-		label_2_1.setBounds(334, 127, 90, 90);
-		contentPane.add(label_2_1);
+		btnImage1.setBounds(10, 86, 95, 131);
+		btnImage1.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
+		contentPane.add(btnImage1);
+		
+		btnImage1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+	    		JFileChooser fc=new JFileChooser();
+	    		
+	    		fc.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
+	    		
+	    		int seleccion=fc.showOpenDialog(contentPane);
+	    		
+	    		if(seleccion==JFileChooser.APPROVE_OPTION){
+	    		 	
+	    		    //Seleccionamos el fichero
+	    		    File fichero=fc.getSelectedFile();
+	    			ImageIcon Nimagen1 = new ImageIcon(fc.getSelectedFile().toString());		    
+	    		    System.out.println(fc.getSelectedFile().toString());
+	    			btnImage1.setIcon(new ImageIcon(Nimagen1.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
+	    			//Save image url
+	    			photoPath.set(0, fc.getSelectedFile().getAbsolutePath());
+	    		}	
+	    		
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		//IMAGE2
+		final JButton btnImage2 = new JButton();
+		
+		btnImage2.setBounds(114, 86, 95, 131);
+		btnImage2.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage2.getWidth(), btnImage2.getHeight(), Image.SCALE_SMOOTH)));
+		contentPane.add(btnImage2);
+		
+		btnImage2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+	    		JFileChooser fc=new JFileChooser();
+	    		
+	    		fc.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
+	    		
+	    		int seleccion=fc.showOpenDialog(contentPane);
+				
+				
+	    		if(seleccion==JFileChooser.APPROVE_OPTION){
+				
+    			ImageIcon Nimagen2 = new ImageIcon(fc.getSelectedFile().toString());		    
+    		    System.out.println(fc.getSelectedFile().toString());
+    			btnImage2.setIcon(new ImageIcon(Nimagen2.getImage().getScaledInstance(btnImage2.getWidth(), btnImage2.getHeight(), Image.SCALE_SMOOTH)));
+    			photoPath.set(1, fc.getSelectedFile().getAbsolutePath());
+	    	}
+		}
+		});
+		
+		
+		
+		
+		
+		
+		//IMAGE3
+		final JButton btnImage3 = new JButton();
+		
+		btnImage3.setBounds(225, 86, 95, 131);
+		btnImage3.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage3.getWidth(), btnImage3.getHeight(), Image.SCALE_SMOOTH)));
+		contentPane.add(btnImage3);
+		
+		btnImage3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+	    		JFileChooser fc=new JFileChooser();
+	    		
+	    		fc.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
+	    		
+	    		int seleccion=fc.showOpenDialog(contentPane);
+				
+				
+	    		if(seleccion==JFileChooser.APPROVE_OPTION){
+				
+    			ImageIcon Nimagen3 = new ImageIcon(fc.getSelectedFile().toString());		    
+    		    System.out.println(fc.getSelectedFile().toString());
+    			btnImage3.setIcon(new ImageIcon(Nimagen3.getImage().getScaledInstance(btnImage3.getWidth(), btnImage3.getHeight(), Image.SCALE_SMOOTH)));
+    			photoPath.set(2, fc.getSelectedFile().getAbsolutePath());
+	    		
+	    		}
+		
+			}
+		});
+	
+		
+		
+		
+		//IMAGE4
+		final JButton btnImage4 = new JButton();
+		
+		btnImage4.setBounds(334, 86, 90, 131);
+		btnImage4.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage4.getWidth(), btnImage4.getHeight(), Image.SCALE_SMOOTH)));
+		contentPane.add(btnImage4);
+		
+		btnImage4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+	    		JFileChooser fc=new JFileChooser();
+	    		
+	    		fc.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
+	    		
+	    		int seleccion=fc.showOpenDialog(contentPane);
+				
+				
+	    		if(seleccion==JFileChooser.APPROVE_OPTION){
+				
+    			ImageIcon Nimagen4 = new ImageIcon(fc.getSelectedFile().toString());		    
+    		    System.out.println(fc.getSelectedFile().toString());
+    			btnImage4.setIcon(new ImageIcon(Nimagen4.getImage().getScaledInstance(btnImage4.getWidth(), btnImage4.getHeight(), Image.SCALE_SMOOTH)));
+    			photoPath.set(3, fc.getSelectedFile().getAbsolutePath());
+	    		}
+			}
+		});
+	
+		
+		
 		
 		JButton addButton = new JButton("A\u00D1ADIR FOTOS");
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					GC.addImages(subjectChoice.getSelectedItem(), monthChoice.getSelectedItem(), photoPath, index.getAbsolutePath());
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		addButton.setBounds(50, 227, 148, 23);
 		contentPane.add(addButton);
 		
@@ -172,31 +315,5 @@ public class EditEvidence extends JFrame {
 		});
 		cancelButton.setBounds(219, 227, 148, 23);
 		contentPane.add(cancelButton);
-		
-		JButton pickButton = new JButton("FOTOS");
-		pickButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				JFileChooser fc=new JFileChooser();
-	    		 
-	    		//Indicamos lo que podemos seleccionar
-				fc.setMultiSelectionEnabled(true);
-	    		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-	    		
-	    		 
-	    		//Abrimos la ventana, guardamos la opcion seleccionada por el usuario
-	    		int selection=fc.showOpenDialog(contentPane);
-	    		 
-	    		//Si el usuario, pincha en aceptar
-	    		if(selection==JFileChooser.APPROVE_OPTION)
-	    		{
-	    			File[] images = fc.getSelectedFiles();
-	    			
-	    		} 
-				
-			}
-		});
-		pickButton.setBounds(159, 81, 89, 23);
-		contentPane.add(pickButton);
 	}
 }

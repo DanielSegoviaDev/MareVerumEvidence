@@ -88,12 +88,18 @@ public class Subject {
 		
 		// añadir el month para que se añada segun el mes las fotos
 		int monthNumber = 0;
-		for(int i = 0; i<=8; i++) {
+		for(int i = 0; i<=8; i++) { 
 			if(month.equals(months.elementAt(i)))
 				monthNumber = months.indexOf(months.elementAt(i));
 		}
 		
-		int vectorPosition = monthNumber * 4 - 1;
+		int vectorPosition = 0;
+		
+		if(monthNumber == 0) {
+			vectorPosition = monthNumber * 4;
+		}
+		
+		
 		String nullController = new String(pictures.elementAt(vectorPosition));
 		
 		if(nullController.equals("null")) {

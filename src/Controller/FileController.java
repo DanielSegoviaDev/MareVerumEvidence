@@ -63,7 +63,7 @@ public class FileController {
 					XSLFSlide slide = ppt.createSlide(titleLayout);
 					XSLFTextShape textContent = slide.getPlaceholder(0);
 					textContent.setText(subjects.elementAt(i));
-					textContent.setAnchor(new Rectangle2D.Double(28.32*3, 28.32*9, 28.32 * 20, 28.32*3));
+					textContent.setAnchor(new Rectangle2D.Double(28.32* 3, 28.32* 9, 28.32 * 20, 28.32 * 3));
 					slide.removeShape(slide.getPlaceholder(1));
 					
 					
@@ -72,15 +72,18 @@ public class FileController {
 						XSLFSlide contentSlide = ppt.createSlide(contentLayout);
 						XSLFTextShape month = contentSlide.getPlaceholder(0);
 						month.setText(period.elementAt(j));
-						month.setAnchor(new Rectangle2D.Double( 28.32 * 1 , 28.32 * 0, 28.32 * 24, 28.32 * 2));
+						month.setAnchor(new Rectangle2D.Double( 28.32 * 0.94 , 28.32 * 0.42, 28.32 * 24, 28.32 * 2));
 						contentSlide.removeShape(contentSlide.getPlaceholder(1));
 
 					}
+					
 					
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
 				}
+				
+				ppt.setPageSize(new java.awt.Dimension(737, 624));
 				
 				FileOutputStream out = new FileOutputStream(file);
 				ppt.write(out);
@@ -306,10 +309,10 @@ public class FileController {
 			byte[] pictureData2 = IOUtils.toByteArray(new FileInputStream(photoPath.elementAt(2)));
 			byte[] pictureData3 = IOUtils.toByteArray(new FileInputStream(photoPath.elementAt(3)));
 			
-			Rectangle2D rect = new Rectangle2D.Double( 28.32 * 0 , 28.32 * 3, 28.32 * 12, 28.32 * 9);
-			Rectangle2D rect1 = new Rectangle2D.Double( 28.32 * 14 , 28.32 * 3, 28.32 * 12, 28.32 * 9);
-			Rectangle2D rect2 = new Rectangle2D.Double( 28.32 * 0 , 28.32 * 13, 28.32 * 12, 28.32 * 9);
-			Rectangle2D rect3 = new Rectangle2D.Double( 28.32 * 14 , 28.32 * 13, 28.32 * 12, 28.32 * 9);
+			Rectangle2D rect = new Rectangle2D.Double( 28.32 * 0.3 , 28.32 * 3, 28.32 * 12.5, 28.32 * 9);
+			Rectangle2D rect1 = new Rectangle2D.Double( 28.32 * 13.2 , 28.32 * 3, 28.32 * 12.5, 28.32 * 9);
+			Rectangle2D rect2 = new Rectangle2D.Double( 28.32 * 0.3 , 28.32 * 12.5, 28.32 * 12.5, 28.32 * 9);
+			Rectangle2D rect3 = new Rectangle2D.Double( 28.32 * 13.2 , 28.32 * 12.5, 28.32 * 12.5, 28.32 * 9);
 			
 			XSLFPictureData pd = ppt.addPicture(pictureData0, PictureData.PictureType.JPEG);
 			XSLFPictureData pd1 = ppt.addPicture(pictureData1, PictureData.PictureType.JPEG);
@@ -545,7 +548,7 @@ public class FileController {
 	public Subject getSubject(String Name)
 	{
 		for (int i = 0; i < subjects.size() - 1; i++)
-		{
+		{ 
 			if (subjects.elementAt(i).getName() == Name)
 			{
 				return subjects.elementAt(i);
