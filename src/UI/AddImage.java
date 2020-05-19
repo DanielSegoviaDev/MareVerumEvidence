@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 
-public class EditEvidence extends JFrame {
+public class AddImage extends JFrame {
 
 	/**
 	 * 
@@ -37,11 +37,10 @@ public class EditEvidence extends JFrame {
 
 	/**
 	 * Launch the application.
-
 	/**
 	 * Create the frame.
 	 */
-	public EditEvidence(final GeneralController GC) {
+	public AddImage(final GeneralController GC, Menu frame) {
 		
 		photoPath = new Vector<String>();
 		photoPath.add("");
@@ -49,16 +48,19 @@ public class EditEvidence extends JFrame {
 		photoPath.add("");
 		photoPath.add("");
 		
+		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
+		setIconImage(EMV.getImage());
+		
 		setTitle("EVIDENCIAS MARE VERUM || Editar evidencias");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 1000, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		ppPath = new JTextField();
-		ppPath.setBounds(10, 11, 243, 20);
+		ppPath.setBounds(168, 12, 243, 20);
 		contentPane.add(ppPath);
 		ppPath.setColumns(10);
 		
@@ -148,7 +150,7 @@ public class EditEvidence extends JFrame {
 			}
 		});
 		ppSelectButton.setFont(new Font("Arial", Font.PLAIN, 12));
-		ppSelectButton.setBounds(263, 10, 161, 23);
+		ppSelectButton.setBounds(421, 11, 161, 23);
 		contentPane.add(ppSelectButton);
 		
 		JSeparator separator = new JSeparator();
@@ -178,7 +180,6 @@ public class EditEvidence extends JFrame {
 	    		if(seleccion==JFileChooser.APPROVE_OPTION){
 	    		 	
 	    		    //Seleccionamos el fichero
-	    		    File fichero=fc.getSelectedFile();
 	    			ImageIcon Nimagen1 = new ImageIcon(fc.getSelectedFile().toString());		    
 	    		    System.out.println(fc.getSelectedFile().toString());
 	    			btnImage1.setIcon(new ImageIcon(Nimagen1.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
@@ -315,5 +316,16 @@ public class EditEvidence extends JFrame {
 		});
 		cancelButton.setBounds(219, 227, 148, 23);
 		contentPane.add(cancelButton);
+		
+	    JButton btnBack = new JButton("< Volver");
+	    btnBack.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		dispose();
+	    		frame.setVisible(true);
+	    		
+	    	}
+	    });
+	    btnBack.setBounds(10, 11, 89, 23);
+	    contentPane.add(btnBack);
 	}
 }

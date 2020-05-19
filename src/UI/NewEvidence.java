@@ -10,11 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import javax.swing.JList;
-
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import java.awt.Choice;
@@ -42,10 +43,14 @@ public class NewEvidence extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewEvidence(final GeneralController GC) {
+	public NewEvidence(final GeneralController GC, Menu frame) {
+		
+		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
+		setIconImage(EMV.getImage());
+		
 		setTitle("EVIDENCIAS MARE VERUM  || Crear Evidencia");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(230, 230, 250));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -56,11 +61,11 @@ public class NewEvidence extends JFrame {
 		lblNombreDelArchivo.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		lblNombreDelArchivo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreDelArchivo.setToolTipText("(El nombre con el que se va a guardar el archivo)");
-		lblNombreDelArchivo.setBounds(14, 11, 144, 20);
+		lblNombreDelArchivo.setBounds(213, 11, 144, 20);
 		contentPane.add(lblNombreDelArchivo);
 		
 		nameField = new JTextField();
-		nameField.setBounds(168, 11, 260, 20);
+		nameField.setBounds(367, 11, 260, 20);
 		contentPane.add(nameField);
 		nameField.setColumns(10);
 		
@@ -68,6 +73,7 @@ public class NewEvidence extends JFrame {
 		subjSelectorButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SubjectSelector newSelector = new SubjectSelector(GC);
+				newSelector.setLocationRelativeTo(null);
 				newSelector.setVisible(true);
 				
 			}
@@ -100,7 +106,7 @@ public class NewEvidence extends JFrame {
 	    });
 	    
 	    JSeparator separator = new JSeparator();
-	    separator.setBounds(6, 44, 422, 7);
+	    separator.setBounds(6, 56, 422, 7);
 	    contentPane.add(separator);
 	    
 	    final Choice periodSelector = new Choice();
@@ -156,6 +162,24 @@ public class NewEvidence extends JFrame {
 	    constructEvidenceB.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		
+	    		if(nameField.getText().equals(""))
+	    		{
+	    			JOptionPane.showMessageDialog(null, "Ingrese un nombre para su evidencia", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
+	    		}
+	    		else if(((DefaultListModel<String>) subjects.getModel()).isEmpty())
+	    		{
+	    			JOptionPane.showMessageDialog(null, "Ingrese al menos una materia para continuar", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
+	    		}
+	    		else if(periodSelector.getSelectedItem().equals("Periodo"))
+	    		{
+	    			JOptionPane.showMessageDialog(null, "Seleccione un periodo valido para continuar", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
+	    		}
+	    		else if(index == null)
+	    		{
+	    			JOptionPane.showMessageDialog(null, "Ingrese la ruta donde se va a guardar su evidencia", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
+	    		}
+	    		else 
+	    		{	
 	    		System.out.println(index.getAbsolutePath());
 	    		
 	    		System.out.println("-------------------");
@@ -163,10 +187,30 @@ public class NewEvidence extends JFrame {
 	    		System.out.println(index.getAbsolutePath() + "\\" +  nameField.getText());
 	    		
 	    		GC.newEvidence(periodSelector.getSelectedItem(), index.getAbsolutePath() + "\\" +  nameField.getText() + ".ppt");
+	    		
+	    		JOptionPane.showMessageDialog(null,"¡Se ha creado su evidencia correctamente!");
+	    		
+	    		dispose();
+	    		frame.setVisible(true);
+	    		
+	    		
+	    	
+	    		}
 	    	}
 	    });
 	    constructEvidenceB.setBounds(125, 225, 167, 23);
 	    contentPane.add(constructEvidenceB);
+	    
+	    JButton btnBack = new JButton("< Volver");
+	    btnBack.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		dispose();
+	    		frame.setVisible(true);
+	    		
+	    	}
+	    });
+	    btnBack.setBounds(10, 11, 89, 23);
+	    contentPane.add(btnBack);
 	    
 	 
 	    

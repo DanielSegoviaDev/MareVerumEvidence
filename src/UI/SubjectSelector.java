@@ -1,6 +1,7 @@
 package UI;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +11,8 @@ import Controller.GeneralController;
 import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,8 +36,11 @@ public class SubjectSelector extends JFrame {
 	 */
 	public SubjectSelector(final GeneralController GC) {
 		setTitle("EVIDENCIAS MARE VERUM || Agregar materias");
-	
-		setBounds(100, 100, 450, 300);
+		
+		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
+		setIconImage(EMV.getImage());
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -60,10 +66,24 @@ public class SubjectSelector extends JFrame {
 		addSubjetsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				if(!textPaneSubjets.getText().equals(""))
+				{
+					
 				String subjects = textPaneSubjets.getText();
 				
 				System.out.println(subjects);
 				GC.getTextFromTP(subjects);
+				JOptionPane.showMessageDialog(null, "Se han añadido las materias");
+				dispose();
+				
+				}
+				
+				else
+				
+				{
+					JOptionPane.showMessageDialog(null, "Ingrese al menos una materia para continuar", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 		});
 		addSubjetsButton.setBounds(10, 227, 180, 23);

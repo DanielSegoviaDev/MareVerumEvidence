@@ -11,6 +11,8 @@ import Controller.GeneralController;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -19,9 +21,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 
 public class Menu extends JFrame {
 
@@ -30,6 +29,7 @@ public class Menu extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static Menu frame;
 	
 
 	/**
@@ -39,7 +39,8 @@ public class Menu extends JFrame {
 		EventQueue.invokeLater(new Runnable() { 
 			public void run() {
 				try {
-					Menu frame = new Menu();
+					frame = new Menu();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 					
 				} catch (Exception e) {
@@ -59,12 +60,16 @@ public class Menu extends JFrame {
 	public Menu() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		
 		 final GeneralController GC = GeneralController.getController();
+			
+		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
+		setIconImage(EMV.getImage());
+		
+		
 		
 		setTitle("EVIDENCIAS MARE VERUM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(192, 192, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -76,24 +81,14 @@ public class Menu extends JFrame {
 		contentPane.add(lblBienvenidoDeNuevo);
 		
 		final JButton newEvidenceButton = new JButton("NUEVA \r\nEVIDENCIA");
-		newEvidenceButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				newEvidenceButton.setBackground(new Color(60, 90, 115));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				newEvidenceButton.setBackground(Color.LIGHT_GRAY);
-			}
-		});
-		
-		
 		newEvidenceButton.setForeground(Color.BLACK);
 		newEvidenceButton.setBackground(Color.LIGHT_GRAY);
 		newEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				NewEvidence evidence = new NewEvidence(GC);
+				NewEvidence evidence = new NewEvidence(GC, frame);
+				evidence.setLocationRelativeTo(null);
 				evidence.setVisible(true);
+				frame.setVisible(false);
 				
 			}
 		});
@@ -106,7 +101,9 @@ public class Menu extends JFrame {
 		JButton editEvidenceButton = new JButton("EDITA EVIDENCIAS");
 		editEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditEvidence newE = new EditEvidence(GC);
+				AddImage newE = new AddImage(GC, frame);
+				newE.setLocationRelativeTo(null);
+				frame.setVisible(false);
 				newE.setVisible(true);
 			}
 		});

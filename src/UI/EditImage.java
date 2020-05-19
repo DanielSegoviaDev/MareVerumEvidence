@@ -154,6 +154,7 @@ public class EditImage extends JFrame {
 	    		 	
 	    		    //Seleccionamos el fichero
 	    		    File fichero=fc.getSelectedFile();
+	    		    
 	    			ImageIcon Nimagen1 = new ImageIcon(fc.getSelectedFile().toString());		    
 	    		    System.out.println(fc.getSelectedFile().toString());
 	    			btnImage1.setIcon(new ImageIcon(Nimagen1.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
