@@ -11,16 +11,18 @@ import Controller.GeneralController;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+
+import javax.swing.SwingConstants;
 
 public class Menu extends JFrame {
 
@@ -61,6 +63,8 @@ public class Menu extends JFrame {
 		
 		 final GeneralController GC = GeneralController.getController();
 			
+		 
+		 
 		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
 		setIconImage(EMV.getImage());
 		
@@ -74,15 +78,21 @@ public class Menu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblBienvenidoDeNuevo = new JLabel("Bienvenido de Nuevo! ");
+		JLabel lblBienvenidoDeNuevo = new JLabel("\u00A1Bienvenido/a de nuevo!");
 		lblBienvenidoDeNuevo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBienvenidoDeNuevo.setFont(new Font("Arial", Font.BOLD, 14));
-		lblBienvenidoDeNuevo.setBounds(129, 23, 173, 30);
+		lblBienvenidoDeNuevo.setFont(new Font("Cooper Black", Font.PLAIN, 50));
+		lblBienvenidoDeNuevo.setBounds(25, 41, 718, 117);
+		/*
+		ImageIcon II = new ImageIcon("bienvenido.png");
+
+		ImageIcon welcome = new ImageIcon(II.getImage().getScaledInstance(lblBienvenidoDeNuevo.getWidth(), lblBienvenidoDeNuevo.getHeight(), Image.SCALE_SMOOTH));
+		lblBienvenidoDeNuevo.setIcon(welcome);
+		 */
 		contentPane.add(lblBienvenidoDeNuevo);
 		
 		final JButton newEvidenceButton = new JButton("NUEVA \r\nEVIDENCIA");
 		newEvidenceButton.setForeground(Color.BLACK);
-		newEvidenceButton.setBackground(Color.LIGHT_GRAY);
+		newEvidenceButton.setBackground(new Color(255, 245, 238));
 		newEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				NewEvidence evidence = new NewEvidence(GC, frame);
@@ -94,11 +104,12 @@ public class Menu extends JFrame {
 		});
 	
 		
-		newEvidenceButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		newEvidenceButton.setBounds(42, 82, 173, 100);
+		newEvidenceButton.setFont(new Font("Cooper Black", Font.PLAIN, 18));
+		newEvidenceButton.setBounds(101, 185, 250, 200);
 		contentPane.add(newEvidenceButton);
 		
 		JButton editEvidenceButton = new JButton("EDITAR EVIDENCIAS");
+		editEvidenceButton.setBackground(new Color(255, 245, 238));
 		editEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EditionSelector newES = new EditionSelector(GC, frame);
@@ -107,9 +118,17 @@ public class Menu extends JFrame {
 				frame.setVisible(false);
 			}
 		});
-		editEvidenceButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		editEvidenceButton.setBounds(225, 82, 180, 100);
+		editEvidenceButton.setFont(new Font("Cooper Black", Font.PLAIN, 18));
+		editEvidenceButton.setBounds(425, 185, 250, 200);
 		contentPane.add(editEvidenceButton);
+		
+		JLabel labelWall = new JLabel("");
+		labelWall.setEnabled(false);
+		labelWall.setBounds(0, 0, 784, 561);
+		ImageIcon icon = new ImageIcon("LogoMareVerum.png");
+		ImageIcon wall = new ImageIcon(icon.getImage().getScaledInstance(labelWall.getWidth(), labelWall.getHeight(), Image.SCALE_SMOOTH));
+		labelWall.setIcon(wall);
+		contentPane.add(labelWall);
 		
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		

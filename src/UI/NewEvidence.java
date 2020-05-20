@@ -27,6 +27,7 @@ import java.io.File;
 import java.awt.event.ActionEvent;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 
 public class NewEvidence extends JFrame {
@@ -211,6 +212,17 @@ public class NewEvidence extends JFrame {
 	    });
 	    btnBack.setBounds(10, 11, 89, 23);
 	    contentPane.add(btnBack);
+	    
+	    JLabel labelWall = new JLabel("");
+	    labelWall.setEnabled(false);
+	    labelWall.setBounds(0, 0, 784, 561);
+		ImageIcon icon = new ImageIcon("LogoMareVerum.png");
+		ImageIcon wall = new ImageIcon(icon.getImage().getScaledInstance(labelWall.getWidth(), labelWall.getHeight(), Image.SCALE_SMOOTH));
+		labelWall.setIcon(wall);
+	    contentPane.add(labelWall);
+	    
+
+
 	    
 	 
 	    
