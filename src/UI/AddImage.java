@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Choice;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -295,7 +296,27 @@ public class AddImage extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
+					if(ppPath.getText().equals("")) 
+					{
+						JOptionPane.showMessageDialog(null, "Seleccione una evidencia para poder continuar", "No se puede continuar", JOptionPane.ERROR_MESSAGE);
+					}
+					else if(photoPath.elementAt(0).equals("") || photoPath.elementAt(1).equals("") || photoPath.elementAt(2).equals("") || photoPath.elementAt(3).equals("") )
+					{
+						JOptionPane.showMessageDialog(null, "Debe completar todas las imagenes para continuar", "No se puede continuar", JOptionPane.ERROR_MESSAGE);
+					}
+					else
+					{
 					GC.addImages(subjectChoice.getSelectedItem(), monthChoice.getSelectedItem(), photoPath, index.getAbsolutePath());
+					JOptionPane.showMessageDialog(null, "Se han añadido las fotos en el mes de "  + monthChoice.getSelectedItem() + " en la materia " + subjectChoice.getSelectedItem());
+					
+					}
+				
+				
+				
+				
+				
+				
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

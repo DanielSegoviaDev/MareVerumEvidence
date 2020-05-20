@@ -98,13 +98,13 @@ public class Menu extends JFrame {
 		newEvidenceButton.setBounds(42, 82, 173, 100);
 		contentPane.add(newEvidenceButton);
 		
-		JButton editEvidenceButton = new JButton("EDITA EVIDENCIAS");
+		JButton editEvidenceButton = new JButton("EDITAR EVIDENCIAS");
 		editEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddImage newE = new AddImage(GC, frame);
-				newE.setLocationRelativeTo(null);
+				EditionSelector newES = new EditionSelector(GC, frame);
+				newES.setLocationRelativeTo(null);
+				newES.setVisible(true);
 				frame.setVisible(false);
-				newE.setVisible(true);
 			}
 		});
 		editEvidenceButton.setFont(new Font("Arial Black", Font.PLAIN, 12));

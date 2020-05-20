@@ -6,24 +6,23 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Controller.FileController;
+import Controller.GeneralController;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Choice;
-import java.awt.EventQueue;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class EditImage extends JFrame {
@@ -35,22 +34,7 @@ public class EditImage extends JFrame {
 	
 	//private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo de imagen","jpg");
 
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EditImage frame = new EditImage();
-					frame.setVisible(true);
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());		
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	public EditImage() {
+	public EditImage(GeneralController GC, Menu frame) {
 		
 
 
@@ -84,7 +68,7 @@ public class EditImage extends JFrame {
 		//Shows list of subjects
 
 		Vector<String> listSubject = new Vector<String>();
-		listSubject = FC.getSubjects("C:\\Users\\Daniel\\Desktop\\elvi .ppt");
+		listSubject = FC.getSubjects("C:\\Users\\Daniel\\Desktop\\elvi.ppt");
 	
 		final Choice choiceSubjects = new Choice();
 		choiceSubjects.setBounds(10, 110, 120, 20);
@@ -130,12 +114,14 @@ public class EditImage extends JFrame {
 		ImageIcon imagen3 = new ImageIcon(img2);
 		ImageIcon imagen4 = new ImageIcon(img3);
 */		
+	
+		/*
 		ImageIcon imagen1 = new ImageIcon("C:\\Users\\elviv\\Downloads\\Wolf.png");
 		ImageIcon imagen2 = new ImageIcon("C:\\Users\\elviv\\Downloads\\Wolf.png");
 		ImageIcon imagen3 = new ImageIcon("C:\\Users\\elviv\\Downloads\\Wolf.png");
 		ImageIcon imagen4 = new ImageIcon("C:\\Users\\elviv\\Downloads\\Wolf.png");
 		
-		
+		*/
 		
 		
 		
@@ -152,8 +138,7 @@ public class EditImage extends JFrame {
 	    		
 	    		if(seleccion==JFileChooser.APPROVE_OPTION){
 	    		 	
-	    		    //Seleccionamos el fichero
-	    		    File fichero=fc.getSelectedFile();
+	    		    //Seleccionamos el ficher
 	    		    
 	    			ImageIcon Nimagen1 = new ImageIcon(fc.getSelectedFile().toString());		    
 	    		    System.out.println(fc.getSelectedFile().toString());
@@ -165,7 +150,7 @@ public class EditImage extends JFrame {
 			}
 		});
 		btnImage1.setBounds(10, 215, 90, 90);
-		btnImage1.setIcon(new ImageIcon(imagen1.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
+	//	btnImage1.setIcon(new ImageIcon(imagen1.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage1);
 		btnImage1.setVisible(false);
 		
@@ -197,7 +182,7 @@ public class EditImage extends JFrame {
 		}
 		});
 		btnImage2.setBounds(116, 215, 90, 90);
-		btnImage2.setIcon(new ImageIcon(imagen2.getImage().getScaledInstance(btnImage2.getWidth(), btnImage2.getHeight(), Image.SCALE_SMOOTH)));
+		//btnImage2.setIcon(new ImageIcon(imagen2.getImage().getScaledInstance(btnImage2.getWidth(), btnImage2.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage2);
 		btnImage2.setVisible(false);
 		
@@ -228,7 +213,7 @@ public class EditImage extends JFrame {
 			}
 		});
 		btnImage3.setBounds(222, 215, 90, 90);
-		btnImage3.setIcon(new ImageIcon(imagen3.getImage().getScaledInstance(btnImage3.getWidth(), btnImage3.getHeight(), Image.SCALE_SMOOTH)));
+	//	btnImage3.setIcon(new ImageIcon(imagen3.getImage().getScaledInstance(btnImage3.getWidth(), btnImage3.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage3);
 		btnImage3.setVisible(false);
 		
@@ -255,7 +240,7 @@ public class EditImage extends JFrame {
 			}
 		});
 		btnImage4.setBounds(334, 215, 90, 90);
-		btnImage4.setIcon(new ImageIcon(imagen4.getImage().getScaledInstance(btnImage4.getWidth(), btnImage4.getHeight(), Image.SCALE_SMOOTH)));
+		//btnImage4.setIcon(new ImageIcon(imagen4.getImage().getScaledInstance(btnImage4.getWidth(), btnImage4.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage4);
 		btnImage4.setVisible(false);
 		
