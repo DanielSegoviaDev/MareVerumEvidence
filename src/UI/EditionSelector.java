@@ -26,7 +26,7 @@ public class EditionSelector extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EditionSelector(GeneralController GC, Menu frame) {
+	public EditionSelector(final GeneralController GC, final Menu frame) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);

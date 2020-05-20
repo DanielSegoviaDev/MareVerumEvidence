@@ -44,7 +44,7 @@ public class NewEvidence extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewEvidence(final GeneralController GC, Menu frame) {
+	public NewEvidence(final GeneralController GC, final Menu frame) {
 		
 		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
 		setIconImage(EMV.getImage());

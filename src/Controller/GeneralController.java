@@ -112,7 +112,7 @@ public class GeneralController {
 	
 	
 	
-	private Subject getSubjectForPosition(int monthPosition) {
+	public Subject getSubjectForPosition(int monthPosition) {
 		Vector<Integer> positions = new Vector<Integer>();
 		
 		for(int i = 0; i<= subjects.size() -1; i++) {

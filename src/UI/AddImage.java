@@ -41,7 +41,7 @@ public class AddImage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddImage(final GeneralController GC, Menu frame) {
+	public AddImage(final GeneralController GC, final Menu frame) {
 		
 		photoPath = new Vector<String>();
 		photoPath.add("");
