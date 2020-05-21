@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.GeneralController;
 
+import javax.security.auth.Subject;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,7 +33,7 @@ public class EditImage extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Vector<String>photoPath;
-	
+	private Model.Subject subject;
 	private JTextField textPath;
 	private File index;
 
@@ -40,7 +41,7 @@ public class EditImage extends JFrame {
 	public EditImage (final GeneralController GC, final Menu frame) {
 		
 		Dimension dim=super.getToolkit().getScreenSize();
-
+		
 	    super.setSize(dim);
 		
 		photoPath = new Vector<String>();
@@ -97,9 +98,7 @@ public class EditImage extends JFrame {
 	    			
 	    		    //Seleccionamos el fichero
 	    		    index = fc.getSelectedFile();
-	    		    
 	    		    textPath.setText(index.getAbsolutePath());
-	    		    
 	    		    textPath.setEditable(false);
 	    		    
 	    		    String path = index.getAbsolutePath();
@@ -172,20 +171,17 @@ public class EditImage extends JFrame {
 		lblNewLabeltext.setVisible(false);
 		
 		
-		GC.readEvidence("C:\\Users\\elviv\\Desktop\\Test.ppt");
-		Model.Subject subject = GC.getSubjectForPosition(1);
 
-		System.out.println(subject.getName());
+
 		
-		
-		//ImageIcon imagen1 = new ImageIcon(subject.getPicture(1, 1));
-		
+
+
 		//System.out.println(subject.getPicture(1, 1));
 		ImageIcon imagen1 = new ImageIcon("C:\\Users\\elviv\\Downloads\\wolf.png");
 		ImageIcon imagen2 = new ImageIcon("C:\\Users\\elviv\\Downloads\\wolf.png");
 		ImageIcon imagen3 = new ImageIcon("C:\\Users\\elviv\\Downloads\\wolf.png");
 		ImageIcon imagen4 = new ImageIcon("C:\\Users\\elviv\\Downloads\\wolf.png");
-		
+	
 
 
 		
@@ -317,10 +313,21 @@ public class EditImage extends JFrame {
 				
 				System.out.println("Materia: "+choiceSubjects.getSelectedIndex());
 				System.out.println("Mes :"+choiceMonth.getSelectedIndex());
+				if(choiceSubjects.getSelectedIndex()==0)
+				{
+					subject = GC.getSubjectForPosition(1);
+				}
+				else
+				{
+					subject = GC.getSubjectForPosition(choiceSubjects.getSelectedIndex()*11);
+				}
 				
+				
+				System.out.println(subject.getName());
 				
 				if (choiceMonth.getSelectedIndex()>= 0 && choiceSubjects.getSelectedIndex() >= 0)
 				{
+					
 					lblNewLabeltext.setVisible(true);
 					btnImage1.setVisible(true);
 					btnImage2.setVisible(true);

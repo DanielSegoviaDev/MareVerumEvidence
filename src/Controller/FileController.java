@@ -208,6 +208,9 @@ public class FileController {
 							Subject newSubject = new Subject(subject, position, monthPosition, subjectsPictures, period);
 							count = 0;
 							subjects.add(newSubject);
+							System.out.println(newSubject.getName());
+							System.out.println(newSubject.getMonthPositions().elementAt(0)+ " "+ newSubject.getMonthPositions().size());
+							monthPosition.removeAllElements();
 							
 						}
 					 }

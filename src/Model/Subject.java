@@ -54,6 +54,11 @@ public class Subject {
 		if(!nullOption.equals("null")) {
 			flag = false; 
 		}
+		
+		for(int i = 0; i <= 36; i++) {
+			pictures.add("null".getBytes());
+		}
+		
 	}
 
 	public String getName() {
@@ -95,15 +100,13 @@ public class Subject {
 		
 		int vectorPosition = 0;
 		
-		if(monthNumber == 0) {
-			vectorPosition = monthNumber * 4;
-		}
-		
+		vectorPosition = monthNumber * 4;
+
 		
 		String nullController = new String(pictures.elementAt(vectorPosition));
 		
 		if(nullController.equals("null")) {
-		
+			
 			byte[] pictureData0 = IOUtils.toByteArray(new FileInputStream(picturePath.elementAt(0)));
 			byte[] pictureData1 = IOUtils.toByteArray(new FileInputStream(picturePath.elementAt(1)));
 			byte[] pictureData2 = IOUtils.toByteArray(new FileInputStream(picturePath.elementAt(2)));
@@ -114,20 +117,19 @@ public class Subject {
 			pictures.add(vectorPosition+2, pictureData2);
 			pictures.add(vectorPosition+3, pictureData3);
 		}
+
 	}
 
-	public byte[] getPicture(String month, int imageNumber)
+	public byte[] getPicture(int month, int imageNumber)
 	{
-		int pos = 0;
-		for(int i=0; i<=8 ; i++)
+		if (month == 0)
 		{
-			if(month == months.elementAt(i))
-			{
-				pos = i;
-			}
+			return pictures.elementAt(imageNumber);
 		}
-
-		return pictures.elementAt(pos+imageNumber);
-
+		else
+		{
+			month = 4 * month;
+			return pictures.elementAt(month+imageNumber);
+		}
 	}
 }

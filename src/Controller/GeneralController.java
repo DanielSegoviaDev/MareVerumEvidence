@@ -65,9 +65,11 @@ public class GeneralController {
 	{
 		if(existEvidence(path)) {
 			int position = fileController.getMonthPosition(month, subject, path);
+			/*
 			Subject selectedSubject = getSubjectForPosition(position);
 			
 			selectedSubject.addPictures(photoPath, month);
+			*/
 			fileController.addImages(subject, month, photoPath, path);
 		}
 		
