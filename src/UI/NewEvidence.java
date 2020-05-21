@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.SystemColor;
 
 public class NewEvidence extends JFrame {
 
@@ -39,6 +40,7 @@ public class NewEvidence extends JFrame {
 	private JPanel contentPane;
 	private JTextField nameField;
 	private File index;
+	private boolean flag;
 
 
 	/**
@@ -46,11 +48,13 @@ public class NewEvidence extends JFrame {
 	 */
 	public NewEvidence(final GeneralController GC, final Menu frame) {
 		
+		flag = false;
+		
 		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
 		setIconImage(EMV.getImage());
 		
 		setTitle("EVIDENCIAS MARE VERUM  || Crear Evidencia");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(230, 230, 250));
@@ -59,60 +63,68 @@ public class NewEvidence extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNombreDelArchivo = new JLabel("Nombre del Archivo:");
-		lblNombreDelArchivo.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		lblNombreDelArchivo.setFont(new Font("Cooper Black", Font.PLAIN, 25));
 		lblNombreDelArchivo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreDelArchivo.setToolTipText("(El nombre con el que se va a guardar el archivo)");
-		lblNombreDelArchivo.setBounds(213, 11, 144, 20);
+		lblNombreDelArchivo.setBounds(124, 22, 284, 33);
 		contentPane.add(lblNombreDelArchivo);
 		
 		nameField = new JTextField();
-		nameField.setBounds(367, 11, 260, 20);
+		nameField.setFont(new Font("Cooper Black", Font.PLAIN, 18));
+		nameField.setBounds(411, 25, 367, 32);
 		contentPane.add(nameField);
 		nameField.setColumns(10);
 		
 		JButton subjSelectorButton = new JButton("Seleccionar Materias");
+		subjSelectorButton.setBackground(new Color(255, 240, 245));
 		subjSelectorButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				flag = true;
 				SubjectSelector newSelector = new SubjectSelector(GC);
 				newSelector.setLocationRelativeTo(null);
 				newSelector.setVisible(true);
 				
 			}
 		});
-		subjSelectorButton.setFont(new Font("Arial", Font.PLAIN, 12));
+		subjSelectorButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
 		subjSelectorButton.setToolTipText("Las materias que conforman su Ciclo Lectivo");
-		subjSelectorButton.setBounds(14, 81, 167, 23);
+		subjSelectorButton.setBounds(20, 166, 340, 54);
 		contentPane.add(subjSelectorButton);
 		
 		
 		
 		JScrollPane s = new JScrollPane();
 	    s.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	    s.setBounds(197, 71, 214, 87);
+	    s.setBounds(370, 100, 380, 230);
 	    contentPane.add(s);
 	    final JList<String> subjects = new JList<String>(new DefaultListModel<String>());
-	    subjects.setFont(new Font("Arial", Font.PLAIN, 15));
-	    subjects.setToolTipText("Aqu\u00ED se muestran las materias Seleccionadas");
+	    subjects.setForeground(SystemColor.windowBorder);
 	    s.setViewportView(subjects);
+	    subjects.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+	    subjects.setToolTipText("Aqu\u00ED se muestran las materias Seleccionadas");
 	    
 	    addMouseListener(new MouseAdapter() {
 	    	public void mouseEntered(MouseEvent e) {
 	    		 ((DefaultListModel<String>) subjects.getModel()).removeAllElements();
-	    		 for(int i = 0; i <= GC.getSubjectVector().size() - 1; i++)
-	    		 { 
+	    		 
+	    		 if(flag) 
+	    		 {
+	    			 for(int i = 0; i <= GC.getSubjectVector().size() - 1; i++)
+	    			 { 
 	    			
-	    		    ((DefaultListModel<String>) subjects.getModel()).addElement(GC.getSubjectVector().elementAt(i));
-	    		 }
+	    				 ((DefaultListModel<String>) subjects.getModel()).addElement(GC.getSubjectVector().elementAt(i));
+	    			 }
+	    		}
 	    	}
 	    });
 	    
 	    JSeparator separator = new JSeparator();
-	    separator.setBounds(6, 56, 422, 7);
+	    separator.setBounds(10, 82, 768, 7);
 	    contentPane.add(separator);
 	    
 	    final Choice periodSelector = new Choice();
-	    periodSelector.setFont(new Font("Arial Black", Font.PLAIN, 14));
-	    periodSelector.setBounds(14, 124, 167, 20);
+	    periodSelector.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+	    periodSelector.setBounds(20, 237, 340, 33);
 	    periodSelector.add("Periodo");
 	    periodSelector.add("Marzo - Noviembre");
 	    periodSelector.add("Agosto - Abril");
@@ -120,16 +132,22 @@ public class NewEvidence extends JFrame {
 	  
 	    
 	    JSeparator separator_1 = new JSeparator();
-	    separator_1.setBounds(6, 184, 422, 7);
+	    separator_1.setBounds(10, 352, 768, 7);
 	    contentPane.add(separator_1);
 	    
+	    JSeparator separator_1_1 = new JSeparator();
+	    separator_1_1.setBounds(10, 440, 768, 7);
+	    contentPane.add(separator_1_1);
+	    
+	    
 	    final JLabel labelPath = new JLabel("Ej... C:\\Users\\User\\Documents");
-	    labelPath.setFont(new Font("Arial", Font.PLAIN, 12));
-	    labelPath.setBounds(14, 194, 241, 20);
+	    labelPath.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+	    labelPath.setBounds(46, 387, 422, 23);
 	    contentPane.add(labelPath);
 	   
 	    
 	    JButton pathSelectorButton = new JButton("Seleccione la Ruta");
+	    pathSelectorButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
 	    pathSelectorButton.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		//Creamos el objeto JFileChooser
@@ -155,11 +173,11 @@ public class NewEvidence extends JFrame {
 	    		}
 	    	}});
 	    pathSelectorButton.setToolTipText("Donde se va a Guardar el archivo");
-	    pathSelectorButton.setBounds(278, 193, 151, 23);
+	    pathSelectorButton.setBounds(451, 381, 260, 35);
 	    contentPane.add(pathSelectorButton);
 	    
 	    JButton constructEvidenceB = new JButton("CREAR EVIDENCIA");
-	    constructEvidenceB.setFont(new Font("Arial Black", Font.PLAIN, 12));
+	    constructEvidenceB.setFont(new Font("Cooper Black", Font.PLAIN, 20));
 	    constructEvidenceB.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		
@@ -191,26 +209,33 @@ public class NewEvidence extends JFrame {
 	    		
 	    		JOptionPane.showMessageDialog(null,"¡Se ha creado su evidencia correctamente!");
 	    		
+	    		
 	    		dispose();
 	    		frame.setVisible(true);
-	    		
+	    		flag = false;
+	    	
+	    		((DefaultListModel<String>) subjects.getModel()).removeAllElements();
 	    		
 	    	
 	    		}
 	    	}
 	    });
-	    constructEvidenceB.setBounds(125, 225, 167, 23);
+	    constructEvidenceB.setBounds(255, 471, 293, 54);
 	    contentPane.add(constructEvidenceB);
 	    
 	    JButton btnBack = new JButton("< Volver");
+	    btnBack.setFont(new Font("Cooper Black", Font.PLAIN, 14));
 	    btnBack.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
+	    		
+	    		((DefaultListModel<String>) subjects.getModel()).removeAllElements();
+	    		flag = false;
 	    		dispose();
 	    		frame.setVisible(true);
 	    		
 	    	}
 	    });
-	    btnBack.setBounds(10, 11, 89, 23);
+	    btnBack.setBounds(0, 0, 100, 41);
 	    contentPane.add(btnBack);
 	    
 	    JLabel labelWall = new JLabel("");
@@ -220,7 +245,7 @@ public class NewEvidence extends JFrame {
 		ImageIcon wall = new ImageIcon(icon.getImage().getScaledInstance(labelWall.getWidth(), labelWall.getHeight(), Image.SCALE_SMOOTH));
 		labelWall.setIcon(wall);
 	    contentPane.add(labelWall);
-	    
+
 
 
 	    

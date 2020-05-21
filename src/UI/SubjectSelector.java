@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
 public class SubjectSelector extends JFrame {
 
 	/**
@@ -42,27 +43,30 @@ public class SubjectSelector extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JTextPane txtpnInThisSeccion = new JTextPane();
-		txtpnInThisSeccion.setFont(new Font("Arial", Font.PLAIN, 12));
-		txtpnInThisSeccion.setText("\r\n\r\nEn esta seccion, usted va a poder agregar sus materias. Escriba cada una de ellas separadas por c\u00F3mas.\r\n\r\nEjemplo: \r\n\r\nMatem\u00E1ticas, F\u00EDsica, Literatura, etcetera.");
-		txtpnInThisSeccion.setBackground(new Color(0, 0, 0));
-		txtpnInThisSeccion.setForeground(new Color(255, 255, 255));
+		txtpnInThisSeccion.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+		txtpnInThisSeccion.setText("\r\n\r\nEn esta secci\u00F3n, usted va a poder agregar sus materias. Escriba cada una de ellas separadas por c\u00F3mas.\r\n\r\nEjemplo: \r\n\r\nMatem\u00E1ticas, F\u00EDsica, Literatura, etcetera.");
+		txtpnInThisSeccion.setBackground(new Color(169, 169, 169));
+		txtpnInThisSeccion.setForeground(new Color(0, 0, 0));
 		txtpnInThisSeccion.setEditable(false);
-		txtpnInThisSeccion.setBounds(200, 0, 234, 261);
+		txtpnInThisSeccion.setBounds(302, 0, 282, 361);
 		contentPane.add(txtpnInThisSeccion);
 		
 		final JTextPane textPaneSubjets = new JTextPane();
+		textPaneSubjets.setFont(new Font("Cooper Black", Font.PLAIN, 20));
 		JScrollPane s = new JScrollPane();
 	    s.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	    s.setBounds(10, 11, 180, 210);
+	    s.setBounds(10, 11, 270, 290);
 	    contentPane.add(s);
 	    s.setViewportView(textPaneSubjets);
 		
 		JButton addSubjetsButton = new JButton("Agregar Materias");
+		addSubjetsButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
 		addSubjetsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -86,8 +90,14 @@ public class SubjectSelector extends JFrame {
 				
 			}
 		});
-		addSubjetsButton.setBounds(10, 227, 180, 23);
+		addSubjetsButton.setBounds(10, 312, 267, 38);
 		contentPane.add(addSubjetsButton);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setBackground(new Color(169, 169, 169));
+		textPane.setEditable(false);
+		textPane.setEnabled(false);
+		textPane.setBounds(290, 0, 12, 361);
+		contentPane.add(textPane);
 	}
-
 }

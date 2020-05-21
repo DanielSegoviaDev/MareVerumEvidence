@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 import javax.swing.SwingConstants;
+import java.awt.SystemColor;
 
 public class Menu extends JFrame {
 
@@ -92,7 +93,7 @@ public class Menu extends JFrame {
 		
 		final JButton newEvidenceButton = new JButton("NUEVA \r\nEVIDENCIA");
 		newEvidenceButton.setForeground(Color.BLACK);
-		newEvidenceButton.setBackground(new Color(255, 245, 238));
+		newEvidenceButton.setBackground(SystemColor.menu);
 		newEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				NewEvidence evidence = new NewEvidence(GC, frame);
@@ -109,7 +110,7 @@ public class Menu extends JFrame {
 		contentPane.add(newEvidenceButton);
 		
 		JButton editEvidenceButton = new JButton("EDITAR EVIDENCIAS");
-		editEvidenceButton.setBackground(new Color(255, 245, 238));
+		editEvidenceButton.setBackground(SystemColor.menu);
 		editEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EditionSelector newES = new EditionSelector(GC, frame);
