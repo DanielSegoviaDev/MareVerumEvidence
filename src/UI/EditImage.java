@@ -177,7 +177,7 @@ public class EditImage extends JFrame {
 
 
 		//System.out.println(subject.getPicture(1, 1));
-		ImageIcon imagen1 = new ImageIcon("C:\\Users\\elviv\\Downloads\\wolf.png");
+
 		ImageIcon imagen2 = new ImageIcon("C:\\Users\\elviv\\Downloads\\wolf.png");
 		ImageIcon imagen3 = new ImageIcon("C:\\Users\\elviv\\Downloads\\wolf.png");
 		ImageIcon imagen4 = new ImageIcon("C:\\Users\\elviv\\Downloads\\wolf.png");
@@ -210,7 +210,7 @@ public class EditImage extends JFrame {
 			}
 		});
 		btnImage1.setBounds(10, 168, 90, 90);
-		btnImage1.setIcon(new ImageIcon(imagen1.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
+		
 		contentPane.add(btnImage1);
 		btnImage1.setVisible(false);
 		
@@ -309,6 +309,7 @@ public class EditImage extends JFrame {
 		
 		JButton btnUploadIMG = new JButton("Cargar Imagenes");
 		btnUploadIMG.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("Materia: "+choiceSubjects.getSelectedIndex());
@@ -325,10 +326,28 @@ public class EditImage extends JFrame {
 				
 				System.out.println(subject.getName());
 				
+				Vector<byte[]> pp = subject.getPictures();				
+				
+				for (int i = 0; i < pp.size()-1; i++) {
+					String nullPoint = new String(pp.elementAt(i));
+					System.out.println(i+"  "+nullPoint.equals("null"));
+				}
+				
+				byte[] im0 = subject.getPicture(choiceSubjects.getSelectedIndex(), 0);
+				System.out.println(im0);
+
+				
+				ImageIcon imagen1 = new ImageIcon(im0);
+				String nullPoint = new String(im0);
+				System.out.println(nullPoint.equals("null"));
+				
+				System.out.println();
+				//SI SELECCIONA, HACEMOS VISIBLE LAS FOTOS
 				if (choiceMonth.getSelectedIndex()>= 0 && choiceSubjects.getSelectedIndex() >= 0)
 				{
 					
 					lblNewLabeltext.setVisible(true);
+					btnImage1.setIcon(new ImageIcon(imagen1.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
 					btnImage1.setVisible(true);
 					btnImage2.setVisible(true);
 					btnImage3.setVisible(true);

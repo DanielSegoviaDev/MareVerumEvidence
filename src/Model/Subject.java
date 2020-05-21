@@ -25,7 +25,7 @@ public class Subject {
 		this.monthPositons = new Vector<Integer>();
 		this.monthPositons.addAll(monthPosition);
 		this.pictures = new Vector<byte[]>();
-		this.pictures = pictures;
+		this.pictures.addAll(pictures);
 		
 		if(period.equals("Marzo - Noviembre") || period.equals("Periodo"))
 		{
@@ -55,9 +55,6 @@ public class Subject {
 			flag = false; 
 		}
 		
-		for(int i = 0; i <= 36; i++) {
-			pictures.add("null".getBytes());
-		}
 		
 	}
 

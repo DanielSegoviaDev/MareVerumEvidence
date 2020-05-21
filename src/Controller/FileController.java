@@ -161,7 +161,7 @@ public class FileController {
 		Vector<byte[]> pictures = new Vector<byte[]>();
 		Vector<byte[]> subjectsPictures = new Vector<byte[]>();
 		Vector<String> subjectNames = new Vector<String>();
-		
+
 		
 		String period = "";
 		int count = 0; 
@@ -173,9 +173,15 @@ public class FileController {
 			return false;
 		} else {
 			try {
+				
+				
 				ppt = new XMLSlideShow(new FileInputStream(file));
 				List<XSLFSlide> slides = ppt.getSlides();
 				
+				readImages(path);
+				pictures.addAll(images);
+				System.out.println(images.isEmpty());
+				System.out.println(images.size());
 				
 				
 				for(int i = 0; i<= slides.size()-1; i++) {
@@ -210,6 +216,7 @@ public class FileController {
 							subjects.add(newSubject);
 							System.out.println("añadi el subject");
 							monthPosition.removeAllElements();
+							subjectsPictures.removeAllElements();
 							
 						}
 					 }
@@ -417,6 +424,91 @@ public class FileController {
 	private void readSlideImage(Vector<byte[]> images, Vector<byte[]> subjectImages, int slideNumber) {
 		
 		int limit = slideNumber % 10;
+		
+		int maxImages = images.size();
+		
+		
+		if(limit == 0) {
+			
+			if(maxImages >= 35) {
+				for(int i = 0; i <= 35; i++) {
+					subjectImages.add(images.elementAt(i));
+				}
+			}else {
+				for(int i = 0; i <= 35; i++) {
+					if(i >= maxImages) {
+						subjectImages.add("null".getBytes());
+					}else {
+						subjectImages.add(images.elementAt(i));
+					}
+				}
+			}
+		}else if(limit == 1) { 
+			if(maxImages>=72) {
+				for(int i = 36; i<=72; i++) {
+					subjectImages.add(images.elementAt(i));
+				}
+			} else {
+				for(int i = 36; i<=72; i++) {
+					if(i >= maxImages) {
+						subjectImages.add("null".getBytes());
+					} else {
+						subjectImages.add(images.elementAt(i));
+					}
+				}
+			}
+			
+		
+		} else {
+			if(limit % 2 == 0) {
+				
+				int index = (36 * limit ) + 1;
+				if(maxImages>= index+36) {
+					for(int i = index; i<= index + 36; i++ ) {
+						subjectImages.add(images.elementAt(i));
+					}
+				} else {
+					
+					for(int i = index; i<= index + 36; i++ ) { 
+						if(i >= maxImages) {
+							subjectImages.add("null".getBytes());
+						} else {
+							subjectImages.add(images.elementAt(i));
+						}
+					}	
+				}
+				
+			}else {
+				
+				int index = (36 * limit ) + (limit - 1);
+				
+				if(maxImages>= index+36) {
+					for(int i = index; i<= index + 36; i++ ) {
+						subjectImages.add(images.elementAt(i));
+					}
+				} else {
+					
+					for(int i = index; i<= index + 36; i++ ) { 
+						if(i >= maxImages) {
+							subjectImages.add("null".getBytes());
+						} else {
+							subjectImages.add(images.elementAt(i));
+						}
+					}	
+				}
+				
+			}
+		}
+		
+	
+	
+	
+	}
+	
+	private void readTotalSlidesImages(Vector<byte[]> images, Vector<byte[]> subjectImages, int slideNumber) {
+		
+		int limit = slideNumber % 10;
+		
 		int maxImages = images.size();
 		
 		
