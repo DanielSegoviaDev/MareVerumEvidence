@@ -208,14 +208,15 @@ public class FileController {
 							Subject newSubject = new Subject(subject, position, monthPosition, subjectsPictures, period);
 							count = 0;
 							subjects.add(newSubject);
-							System.out.println(newSubject.getName());
-							System.out.println(newSubject.getMonthPositions().elementAt(0)+ " "+ newSubject.getMonthPositions().size());
+							System.out.println("añadi el subject");
 							monthPosition.removeAllElements();
 							
 						}
 					 }
 					
 				}
+
+				
 				
 				GeneralController GC = GeneralController.getController();
 				GC.newInstanceOfEvidence(subjectNames, period, path);

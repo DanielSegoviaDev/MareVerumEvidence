@@ -118,6 +118,7 @@ public class AddImage extends JFrame {
 	    		    if(GC.acceptExtension(file))
 	    		    {
 	    		    	GC.readEvidence(path);
+	    		    	System.out.println("lei la evidencia");	    		    	
 	    		    	
 	    		    	int position = GC.compareEvidencePath(path);
 	    		    	

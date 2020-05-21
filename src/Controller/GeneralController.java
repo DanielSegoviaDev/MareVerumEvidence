@@ -65,11 +65,14 @@ public class GeneralController {
 	{
 		if(existEvidence(path)) {
 			int position = fileController.getMonthPosition(month, subject, path);
-			/*
+			
+			
+			// aca se rompe el programa 
+			
 			Subject selectedSubject = getSubjectForPosition(position);
 			
 			selectedSubject.addPictures(photoPath, month);
-			*/
+			
 			fileController.addImages(subject, month, photoPath, path);
 		}
 		
@@ -118,7 +121,7 @@ public class GeneralController {
 		Vector<Integer> positions = new Vector<Integer>();
 		
 		for(int i = 0; i<= subjects.size() -1; i++) {
-			positions = subjects.elementAt(i).getMonthPositions();
+			positions.addAll(subjects.elementAt(i).getMonthPositions()); 
 			for(int j = 0; j<= positions.size()-1; j++) {
 				if(monthPosition == positions.elementAt(j)) {
 						Subject subject= subjects.elementAt(i);

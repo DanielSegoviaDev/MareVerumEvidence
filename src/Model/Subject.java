@@ -23,7 +23,7 @@ public class Subject {
 		this.name = Name;
 		this.position = position;
 		this.monthPositons = new Vector<Integer>();
-		this.monthPositons = monthPosition;
+		this.monthPositons.addAll(monthPosition);
 		this.pictures = new Vector<byte[]>();
 		this.pictures = pictures;
 		
