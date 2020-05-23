@@ -42,6 +42,12 @@ public class Menu extends JFrame {
 		EventQueue.invokeLater(new Runnable() { 
 			public void run() {
 				try {
+					
+					Splash splash = new Splash();
+					splash.setLocationRelativeTo(null);
+					splash.setVisible(true);
+					 Thread.sleep(5000);
+					 splash.dispose();
 					frame = new Menu();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
@@ -64,9 +70,9 @@ public class Menu extends JFrame {
 		
 		 final GeneralController GC = GeneralController.getController();
 			
+		 this.setResizable(false);
 		 
-		 
-		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
+		ImageIcon EMV = new ImageIcon("Images/EvidenciasMareVerum.png");
 		setIconImage(EMV.getImage());
 		
 		
@@ -80,15 +86,10 @@ public class Menu extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblBienvenidoDeNuevo = new JLabel("\u00A1Bienvenido/a de nuevo!");
+		lblBienvenidoDeNuevo.setForeground(Color.BLACK);
 		lblBienvenidoDeNuevo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenidoDeNuevo.setFont(new Font("Cooper Black", Font.PLAIN, 50));
-		lblBienvenidoDeNuevo.setBounds(25, 41, 718, 117);
-		/*
-		ImageIcon II = new ImageIcon("bienvenido.png");
-
-		ImageIcon welcome = new ImageIcon(II.getImage().getScaledInstance(lblBienvenidoDeNuevo.getWidth(), lblBienvenidoDeNuevo.getHeight(), Image.SCALE_SMOOTH));
-		lblBienvenidoDeNuevo.setIcon(welcome);
-		 */
+		lblBienvenidoDeNuevo.setBounds(0, 60, 794, 117);
 		contentPane.add(lblBienvenidoDeNuevo);
 		
 		final JButton newEvidenceButton = new JButton("NUEVA \r\nEVIDENCIA");
@@ -105,29 +106,49 @@ public class Menu extends JFrame {
 		});
 	
 		
-		newEvidenceButton.setFont(new Font("Cooper Black", Font.PLAIN, 18));
-		newEvidenceButton.setBounds(101, 185, 250, 200);
+		newEvidenceButton.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+		newEvidenceButton.setBounds(29, 220, 320, 150);
 		contentPane.add(newEvidenceButton);
 		
-		JButton editEvidenceButton = new JButton("EDITAR EVIDENCIAS");
+		JButton editEvidenceButton = new JButton("AGREGAR FOTOS");
+		editEvidenceButton.setForeground(Color.BLACK);
 		editEvidenceButton.setBackground(SystemColor.menu);
 		editEvidenceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditionSelector newES = new EditionSelector(GC, frame);
-				newES.setLocationRelativeTo(null);
-				newES.setVisible(true);
-				frame.setVisible(false);
+				AddImage newE = new AddImage(GC, frame);
+				newE.setLocationRelativeTo(null);
+				newE.setVisible(true);
+				dispose();
 			}
 		});
-		editEvidenceButton.setFont(new Font("Cooper Black", Font.PLAIN, 18));
-		editEvidenceButton.setBounds(425, 185, 250, 200);
+		editEvidenceButton.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+		editEvidenceButton.setBounds(425, 220, 320, 150);
 		contentPane.add(editEvidenceButton);
 		
 		JLabel labelWall = new JLabel("");
 		labelWall.setEnabled(false);
-		labelWall.setBounds(0, 0, 784, 561);
-		ImageIcon icon = new ImageIcon("LogoMareVerum.png");
+		labelWall.setBounds(0, 0, 794, 571);
+		ImageIcon icon = new ImageIcon("Images/LogoMareVerum.png");
 		ImageIcon wall = new ImageIcon(icon.getImage().getScaledInstance(labelWall.getWidth(), labelWall.getHeight(), Image.SCALE_SMOOTH));
+		
+		JButton btnFolders = new JButton("CREAR CARPETAS CONTENEDORAS");
+		btnFolders.setForeground(new Color(0, 0, 0));
+		btnFolders.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FolderCreator fc = new FolderCreator(GC, frame);
+				fc.setLocationRelativeTo(null);
+				fc.setVisible(true);
+				dispose();
+				
+			}
+		});
+		btnFolders.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+		btnFolders.setBounds(157, 404, 465, 100);
+		contentPane.add(btnFolders);
+		
+		JLabel lblVv = new JLabel("V 1.0");
+		lblVv.setBounds(748, 557, 46, 14);
+		contentPane.add(lblVv);
 		labelWall.setIcon(wall);
 		contentPane.add(labelWall);
 		

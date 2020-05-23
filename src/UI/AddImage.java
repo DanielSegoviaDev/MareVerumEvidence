@@ -4,6 +4,7 @@ package UI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Controller.GeneralController;
 
@@ -49,10 +50,12 @@ public class AddImage extends JFrame {
 		photoPath.add("");
 		photoPath.add("");
 		
-		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
+		this.setResizable(false);
+		
+		ImageIcon EMV = new ImageIcon("Images/EvidenciasMareVerum.png");
 		setIconImage(EMV.getImage());
 		
-		setTitle("EVIDENCIAS MARE VERUM || Editar evidencias");
+		setTitle("EVIDENCIAS MARE VERUM || Agregar fotos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 600);
 		contentPane = new JPanel();
@@ -61,38 +64,45 @@ public class AddImage extends JFrame {
 		contentPane.setLayout(null);
 		
 		ppPath = new JTextField();
-		ppPath.setBounds(168, 12, 243, 20);
+		ppPath.setToolTipText("(Aqu\u00ED aparece la ruta de tu archivo)");
+		ppPath.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+		ppPath.setBounds(147, 24, 456, 30);
 		contentPane.add(ppPath);
 		ppPath.setColumns(10);
 		
 		final Choice subjectChoice = new Choice();
-		subjectChoice.setBounds(10, 50, 120, 20);
+		subjectChoice.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+		subjectChoice.setBounds(94, 96, 240, 30);
 		contentPane.add(subjectChoice);
 		
 		JLabel lblMateria = new JLabel("MATERIA");
 		lblMateria.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMateria.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		lblMateria.setBounds(136, 50, 68, 20);
+		lblMateria.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+		lblMateria.setBounds(340, 87, 145, 44);
 		contentPane.add(lblMateria);
 		
 		final Choice monthChoice = new Choice();
-		monthChoice.setBounds(230, 50, 120, 20);
+		monthChoice.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+		monthChoice.setBounds(552, 96, 193, 20);
 		contentPane.add(monthChoice);
 		
 		JLabel lblMes = new JLabel("MES");
 		lblMes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMes.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		lblMes.setBounds(356, 50, 46, 20);
+		lblMes.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+		lblMes.setBounds(751, 87, 90, 44);
 		contentPane.add(lblMes);
 		
 		
 		
 		JButton ppSelectButton = new JButton("Seleccione archivo");
+		ppSelectButton.setToolTipText("(Donde esta guardado su archivo)");
 		ppSelectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				//Creamos el objeto JFileChooser
 	    		JFileChooser fc=new JFileChooser();
+	    		FileNameExtensionFilter filter = new FileNameExtensionFilter("Ppt files", "ppt");
+	    		fc.setFileFilter(filter);
 	    		 
 	    		//Indicamos lo que podemos seleccionar
 	    		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -151,22 +161,23 @@ public class AddImage extends JFrame {
 	    		}
 			}
 		});
-		ppSelectButton.setFont(new Font("Arial", Font.PLAIN, 12));
-		ppSelectButton.setBounds(421, 11, 161, 23);
+		ppSelectButton.setFont(new Font("Cooper Black", Font.PLAIN, 30));
+		ppSelectButton.setBounds(613, 15, 330, 40);
 		contentPane.add(ppSelectButton);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 42, 434, 2);
+		separator.setBounds(20, 71, 964, 2);
 		contentPane.add(separator);
 		
 		
-		ImageIcon image = new ImageIcon("imageMissing.png");
+		ImageIcon image = new ImageIcon("Images/imageMissing.png");
 		
 		
 		//IMAGE1
 		final JButton btnImage1 = new JButton();
+		btnImage1.setToolTipText("\u00A1Este es un bot\u00F3n seleccionable! Activame para seleccionar una foto para tu evidencia");
 		
-		btnImage1.setBounds(10, 86, 95, 131);
+		btnImage1.setBounds(0, 151, 240, 240);
 		btnImage1.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage1);
 		
@@ -174,6 +185,9 @@ public class AddImage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 	    		JFileChooser fc=new JFileChooser();
+	    		FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png");
+	    		fc.setFileFilter(filter);
+	    		 
 	    		
 	    		fc.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
 	    		
@@ -201,8 +215,9 @@ public class AddImage extends JFrame {
 		
 		//IMAGE2
 		final JButton btnImage2 = new JButton();
+		btnImage2.setToolTipText("\u00A1Este es un bot\u00F3n seleccionable! Activame para seleccionar una foto para tu evidencia");
 		
-		btnImage2.setBounds(114, 86, 95, 131);
+		btnImage2.setBounds(245, 151, 240, 240);
 		btnImage2.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage2.getWidth(), btnImage2.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage2);
 		
@@ -210,6 +225,10 @@ public class AddImage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 	    		JFileChooser fc=new JFileChooser();
+	    		
+	    		FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png");
+	    		fc.setFileFilter(filter);
+	    		 
 	    		
 	    		fc.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
 	    		
@@ -233,8 +252,9 @@ public class AddImage extends JFrame {
 		
 		//IMAGE3
 		final JButton btnImage3 = new JButton();
+		btnImage3.setToolTipText("\u00A1Este es un bot\u00F3n seleccionable! Activame para seleccionar una foto para tu evidencia");
 		
-		btnImage3.setBounds(225, 86, 95, 131);
+		btnImage3.setBounds(500, 151, 240, 240);
 		btnImage3.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage3.getWidth(), btnImage3.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage3);
 		
@@ -242,6 +262,10 @@ public class AddImage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 	    		JFileChooser fc=new JFileChooser();
+	    		
+	    		FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png");
+	    		fc.setFileFilter(filter);
+	    		 
 	    		
 	    		fc.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
 	    		
@@ -265,14 +289,19 @@ public class AddImage extends JFrame {
 		
 		//IMAGE4
 		final JButton btnImage4 = new JButton();
+		btnImage4.setToolTipText("\u00A1Este es un bot\u00F3n seleccionable! Activame para seleccionar una foto para tu evidencia");
 		
-		btnImage4.setBounds(334, 86, 90, 131);
+		btnImage4.setBounds(744, 151, 240, 240);
 		btnImage4.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage4.getWidth(), btnImage4.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(btnImage4);
 		
 		btnImage4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 	    		JFileChooser fc=new JFileChooser();
+	    		
+	    		FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png");
+	    		fc.setFileFilter(filter);
+	    		 
 	    		
 	    		fc.setFileSelectionMode(JFileChooser.APPROVE_OPTION);
 	    		
@@ -293,6 +322,7 @@ public class AddImage extends JFrame {
 		
 		
 		JButton addButton = new JButton("A\u00D1ADIR FOTOS");
+		addButton.setFont(new Font("Cooper Black", Font.PLAIN, 25));
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -308,9 +338,28 @@ public class AddImage extends JFrame {
 					}
 					else
 					{
-					GC.addImages(subjectChoice.getSelectedItem(), monthChoice.getSelectedItem(), photoPath, index.getAbsolutePath());
-					JOptionPane.showMessageDialog(null, "Se han añadido las fotos en el mes de "  + monthChoice.getSelectedItem() + " en la materia " + subjectChoice.getSelectedItem());
-					
+						GC.addImages(subjectChoice.getSelectedItem(), monthChoice.getSelectedItem(), photoPath, index.getAbsolutePath());
+						JOptionPane.showMessageDialog(null, "Se han añadido las fotos en el mes de "  + monthChoice.getSelectedItem() + " en la materia " + subjectChoice.getSelectedItem());
+						if(JOptionPane.showConfirmDialog(null, "¿Desea seguir añadiendo fotos?","", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							photoPath.set(0, "");
+							photoPath.set(1, "");
+							photoPath.set(2, "");
+							photoPath.set(3, "");
+							
+							btnImage1.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
+							contentPane.add(btnImage1);
+							btnImage2.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
+							contentPane.add(btnImage1);
+							btnImage3.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
+							contentPane.add(btnImage1);
+							btnImage4.setIcon(new ImageIcon(image.getImage().getScaledInstance(btnImage1.getWidth(), btnImage1.getHeight(), Image.SCALE_SMOOTH)));
+							contentPane.add(btnImage1);
+						}
+						else
+						{
+				    		dispose();
+				    		frame.setVisible(true);
+						}
 					}
 				
 				
@@ -327,19 +376,12 @@ public class AddImage extends JFrame {
 				}
 			}
 		});
-		addButton.setBounds(50, 227, 148, 23);
+		addButton.setBounds(363, 432, 250, 46);
 		contentPane.add(addButton);
 		
-		JButton cancelButton = new JButton("CANCELAR");
-		cancelButton.setFont(new Font("Arial", Font.PLAIN, 12));
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		cancelButton.setBounds(219, 227, 148, 23);
-		contentPane.add(cancelButton);
-		
 	    JButton btnBack = new JButton("< Volver");
+	    btnBack.setToolTipText("Volver al menu principal");
+	    btnBack.setFont(new Font("Cooper Black", Font.PLAIN, 18));
 	    btnBack.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		dispose();
@@ -347,14 +389,19 @@ public class AddImage extends JFrame {
 	    		
 	    	}
 	    });
-	    btnBack.setBounds(10, 11, 89, 23);
+	    btnBack.setBounds(0, 0, 110, 30);
 	    contentPane.add(btnBack);
 	    
 	    JLabel labelWall = new JLabel("");
 	    labelWall.setEnabled(false);
-	    labelWall.setBounds(0, 0, 984, 561);
-	    ImageIcon icon = new ImageIcon("LogoMareVerum.png");
+	    labelWall.setBounds(0, 0, 994, 571);
+	    ImageIcon icon = new ImageIcon("Images/LogoMareVerum.png");
 		ImageIcon wall = new ImageIcon(icon.getImage().getScaledInstance(labelWall.getWidth(), labelWall.getHeight(), Image.SCALE_SMOOTH));
+		
+		JLabel lblVv = new JLabel("V 1.0");
+		lblVv.setBounds(948, 557, 46, 14);
+		contentPane.add(lblVv);
+		
 		labelWall.setIcon(wall);
 	    contentPane.add(labelWall);
 	}

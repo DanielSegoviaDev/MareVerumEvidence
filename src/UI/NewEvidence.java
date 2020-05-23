@@ -29,7 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Color;
-import java.awt.SystemColor;
+
 
 public class NewEvidence extends JFrame {
 
@@ -41,6 +41,7 @@ public class NewEvidence extends JFrame {
 	private JTextField nameField;
 	private File index;
 	private boolean flag;
+	private final Menu frame;
 
 
 	/**
@@ -50,7 +51,11 @@ public class NewEvidence extends JFrame {
 		
 		flag = false;
 		
-		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
+		this.frame = frame;
+		
+		this.setResizable(false);
+		
+		ImageIcon EMV = new ImageIcon("Images/EvidenciasMareVerum.png");
 		setIconImage(EMV.getImage());
 		
 		setTitle("EVIDENCIAS MARE VERUM  || Crear Evidencia");
@@ -63,15 +68,15 @@ public class NewEvidence extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNombreDelArchivo = new JLabel("Nombre del Archivo:");
-		lblNombreDelArchivo.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+		lblNombreDelArchivo.setFont(new Font("Cooper Black", Font.PLAIN, 30));
 		lblNombreDelArchivo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreDelArchivo.setToolTipText("(El nombre con el que se va a guardar el archivo)");
-		lblNombreDelArchivo.setBounds(124, 22, 284, 33);
+		lblNombreDelArchivo.setBounds(80, 21, 388, 49);
 		contentPane.add(lblNombreDelArchivo);
 		
 		nameField = new JTextField();
-		nameField.setFont(new Font("Cooper Black", Font.PLAIN, 18));
-		nameField.setBounds(411, 25, 367, 32);
+		nameField.setFont(new Font("Cooper Black", Font.BOLD, 25));
+		nameField.setBounds(470, 27, 308, 41);
 		contentPane.add(nameField);
 		nameField.setColumns(10);
 		
@@ -86,21 +91,21 @@ public class NewEvidence extends JFrame {
 				
 			}
 		});
-		subjSelectorButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+		subjSelectorButton.setFont(new Font("Cooper Black", Font.PLAIN, 25));
 		subjSelectorButton.setToolTipText("Las materias que conforman su Ciclo Lectivo");
-		subjSelectorButton.setBounds(20, 166, 340, 54);
+		subjSelectorButton.setBounds(20, 166, 300, 54);
 		contentPane.add(subjSelectorButton);
 		
 		
 		
 		JScrollPane s = new JScrollPane();
 	    s.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	    s.setBounds(370, 100, 380, 230);
+	    s.setBounds(330, 100, 448, 230);
 	    contentPane.add(s);
 	    final JList<String> subjects = new JList<String>(new DefaultListModel<String>());
-	    subjects.setForeground(SystemColor.windowBorder);
+	    subjects.setForeground(Color.BLACK);
 	    s.setViewportView(subjects);
-	    subjects.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+	    subjects.setFont(new Font("Cooper Black", Font.PLAIN, 35));
 	    subjects.setToolTipText("Aqu\u00ED se muestran las materias Seleccionadas");
 	    
 	    addMouseListener(new MouseAdapter() {
@@ -123,8 +128,8 @@ public class NewEvidence extends JFrame {
 	    contentPane.add(separator);
 	    
 	    final Choice periodSelector = new Choice();
-	    periodSelector.setFont(new Font("Cooper Black", Font.PLAIN, 20));
-	    periodSelector.setBounds(20, 237, 340, 33);
+	    periodSelector.setFont(new Font("Cooper Black", Font.PLAIN, 30));
+	    periodSelector.setBounds(20, 237, 300, 30);
 	    periodSelector.add("Periodo");
 	    periodSelector.add("Marzo - Noviembre");
 	    periodSelector.add("Agosto - Abril");
@@ -141,13 +146,13 @@ public class NewEvidence extends JFrame {
 	    
 	    
 	    final JLabel labelPath = new JLabel("Ej... C:\\Users\\User\\Documents");
-	    labelPath.setFont(new Font("Cooper Black", Font.PLAIN, 20));
-	    labelPath.setBounds(46, 387, 422, 23);
+	    labelPath.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+	    labelPath.setBounds(10, 378, 431, 37);
 	    contentPane.add(labelPath);
 	   
 	    
 	    JButton pathSelectorButton = new JButton("Seleccione la Ruta");
-	    pathSelectorButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+	    pathSelectorButton.setFont(new Font("Cooper Black", Font.PLAIN, 25));
 	    pathSelectorButton.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		//Creamos el objeto JFileChooser
@@ -173,11 +178,11 @@ public class NewEvidence extends JFrame {
 	    		}
 	    	}});
 	    pathSelectorButton.setToolTipText("Donde se va a Guardar el archivo");
-	    pathSelectorButton.setBounds(451, 381, 260, 35);
+	    pathSelectorButton.setBounds(451, 370, 327, 48);
 	    contentPane.add(pathSelectorButton);
 	    
 	    JButton constructEvidenceB = new JButton("CREAR EVIDENCIA");
-	    constructEvidenceB.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+	    constructEvidenceB.setFont(new Font("Cooper Black", Font.PLAIN, 25));
 	    constructEvidenceB.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		
@@ -205,18 +210,48 @@ public class NewEvidence extends JFrame {
 	    		
 	    		System.out.println(index.getAbsolutePath() + "\\" +  nameField.getText());
 	    		
-	    		GC.newEvidence(periodSelector.getSelectedItem(), index.getAbsolutePath() + "\\" +  nameField.getText() + ".ppt");
+	    		String filePath = index.getAbsolutePath() + "\\" +  nameField.getText() + ".ppt";
 	    		
-	    		JOptionPane.showMessageDialog(null,"¡Se ha creado su evidencia correctamente!");
-	    		
-	    		
-	    		dispose();
-	    		frame.setVisible(true);
-	    		flag = false;
-	    	
-	    		((DefaultListModel<String>) subjects.getModel()).removeAllElements();
-	    		
-	    	
+	    		if (GC.newEvidence(periodSelector.getSelectedItem(), filePath))
+	    		{
+	    			JOptionPane.showMessageDialog(null,"¡Se ha creado su evidencia correctamente!");
+	    			
+	    			if(JOptionPane.showConfirmDialog(null, "Desea crear una carpeta contenedora de materias?","",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+	    			{
+	    	    		//Creamos el objeto JFileChooser
+	    	    		JFileChooser fc=new JFileChooser();
+	    	    		 
+	    	    		//Indicamos lo que podemos seleccionar
+	    	    		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	    	    
+	    	    		 
+	    	    		//Abrimos la ventana, guardamos la opcion seleccionada por el usuario
+	    	    		int seleccion=fc.showOpenDialog(contentPane);
+	    	    		 
+	    	    		//Si el usuario, pincha en aceptar
+	    	    		if(seleccion==JFileChooser.APPROVE_OPTION){
+	    	    		 
+	    	    			
+	    	    		    //Seleccionamos el fichero
+	    	    		    File directory = fc.getSelectedFile();
+	    	    		    
+	    	    		    GC.generateFolders(directory.getAbsolutePath());
+	    	    		    
+	    	    		    JOptionPane.showMessageDialog(null,"¡Se han creado las carpetas de materias correctamente!");
+	    	    		}
+	    				
+	    				
+	    			}
+	    			
+	    			closeWind();
+		    		((DefaultListModel<String>) subjects.getModel()).removeAllElements();
+		    		
+	    		}
+	    		else
+	    		{
+					JOptionPane.showMessageDialog(null, "Ingrese un nombre diferente al archivo para continuar");
+	    		}
+
 	    		}
 	    	}
 	    });
@@ -224,39 +259,39 @@ public class NewEvidence extends JFrame {
 	    contentPane.add(constructEvidenceB);
 	    
 	    JButton btnBack = new JButton("< Volver");
-	    btnBack.setFont(new Font("Cooper Black", Font.PLAIN, 14));
+	    btnBack.setToolTipText("Volver al menu principal");
+	    btnBack.setFont(new Font("Cooper Black", Font.PLAIN, 16));
 	    btnBack.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		
+	    		closeWind();
 	    		((DefaultListModel<String>) subjects.getModel()).removeAllElements();
-	    		flag = false;
-	    		dispose();
-	    		frame.setVisible(true);
+
 	    		
 	    	}
 	    });
-	    btnBack.setBounds(0, 0, 100, 41);
+	    btnBack.setBounds(0, 0, 115, 27);
 	    contentPane.add(btnBack);
 	    
 	    JLabel labelWall = new JLabel("");
 	    labelWall.setEnabled(false);
-	    labelWall.setBounds(0, 0, 784, 561);
-		ImageIcon icon = new ImageIcon("LogoMareVerum.png");
+	    labelWall.setBounds(0, 0, 794, 571);
+		ImageIcon icon = new ImageIcon("Images/LogoMareVerum.png");
 		ImageIcon wall = new ImageIcon(icon.getImage().getScaledInstance(labelWall.getWidth(), labelWall.getHeight(), Image.SCALE_SMOOTH));
+		
+				JLabel lblVv = new JLabel("V 1.0");
+				lblVv.setBounds(748, 557, 46, 14);
+				contentPane.add(lblVv);
 		labelWall.setIcon(wall);
 	    contentPane.add(labelWall);
-
-
-
-	    
-	 
-	    
-	    
-
-		
-		
-		
 		
 		
 	}
+	
+    private void closeWind() {
+		dispose();
+		frame.setVisible(true);
+		flag = false;
+    }
+
 }

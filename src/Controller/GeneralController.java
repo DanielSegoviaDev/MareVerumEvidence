@@ -14,7 +14,7 @@ public class GeneralController {
 	private Vector<Evidence> evidence;
 	private Vector<Subject> subjects;
 	private FileController fileController;
-	private Vector<String> subjectVector;
+	private Vector<String> subjectsNames;
 	
 	private static GeneralController GC;
 	
@@ -25,8 +25,40 @@ public class GeneralController {
 		evidence = new Vector<Evidence>();
 		subjects = new Vector<Subject>();
 		fileController = new FileController();
-		subjectVector = new Vector<String>();
+		subjectsNames = new Vector<String>();
 	}
+	
+	private void getSubjects()
+	{
+
+		subjects = fileController.exportSubjects(); 
+		System.out.println(subjects.size());
+
+		subjectsNames.removeAllElements();
+		
+		
+		for(int i = 0; i <= subjects.size()-1; i++)
+		{
+			subjectsNames.add(subjects.elementAt(i).getName());
+		}
+	}
+	
+	private Subject getSubjectForPosition(int monthPosition) {
+		Vector<Integer> positions = new Vector<Integer>();
+		
+		for(int i = 0; i<= subjects.size() -1; i++) {
+			positions.addAll(subjects.elementAt(i).getMonthPositions()); 
+			for(int j = 0; j<= positions.size()-1; j++) {
+				if(monthPosition == positions.elementAt(j)) {
+						Subject subject= subjects.elementAt(i);
+						return subject;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	
 	public static GeneralController getController() {
 		if(GC == null)  
@@ -40,13 +72,13 @@ public class GeneralController {
 	}
 	
 	
-	public void newEvidence(String period, String path ) 
+	public boolean newEvidence(String period, String path) 
 	
 	{
-		Evidence instance = new Evidence(subjectVector, period, path);
+		Evidence instance = new Evidence(subjectsNames, period, path);
 		this.evidence.add(instance);
 		
-		fileController.newEvidence(instance);
+		return fileController.newEvidence(instance);
 		
 	}
 	
@@ -66,9 +98,6 @@ public class GeneralController {
 		if(existEvidence(path)) {
 			int position = fileController.getMonthPosition(month, subject, path);
 			
-			
-			// aca se rompe el programa 
-			
 			Subject selectedSubject = getSubjectForPosition(position);
 			
 			selectedSubject.addPictures(photoPath, month);
@@ -77,32 +106,7 @@ public class GeneralController {
 		}
 		
 	}
-	
-	public void setPicture(byte[] pictureData, int index, String month, String subject, String path) 
-	
-	{
-		
-		if(existEvidence(path)) {
-			int position = fileController.getMonthPosition(month, subject, path);
-			Subject changerSubjectPicture = getSubjectForPosition(position);
-			changerSubjectPicture.setPictures(pictureData, index);
-			
-			fileController.setImages(changerSubjectPicture, path);
-			
-		}
-		
-		else 
-		{
-			System.out.println("Evidence doesn´t exist, please, create one");
-		}
-		
-	}
-	
-	
-	private void getSubjects()
-	{
-		subjects = fileController.exportSubjects(); 
-	}
+
 	
 	public boolean existEvidence(String path) {
 		if(evidence.size() != 0) {
@@ -116,34 +120,23 @@ public class GeneralController {
 	}
 	
 	
-	
-	public Subject getSubjectForPosition(int monthPosition) {
-		Vector<Integer> positions = new Vector<Integer>();
-		
-		for(int i = 0; i<= subjects.size() -1; i++) {
-			positions.addAll(subjects.elementAt(i).getMonthPositions()); 
-			for(int j = 0; j<= positions.size()-1; j++) {
-				if(monthPosition == positions.elementAt(j)) {
-						Subject subject= subjects.elementAt(i);
-						return subject;
-				}
-			}
-		}
-		
-		return null;
-	}
-	
-	
 	public void getTextFromTP(String TP)	
 	
 	{
-		subjectVector = new Vector<String>();
+		subjectsNames = new Vector<String>();
 		
 		String[] elements = TP.split(",");
 		
 		for(int i = 0; i <= elements.length -1; i++) 
 		{
-			subjectVector.add(elements[i]);
+			elements[i]= elements[i].trim();
+		}
+		
+		
+		
+		for(int i = 0; i <= elements.length -1; i++) 
+		{
+			subjectsNames.add(elements[i]);
 		}
 		
 		
@@ -151,7 +144,7 @@ public class GeneralController {
 	
 	public Vector<String> getSubjectVector()
 	{
-		return subjectVector;
+		return subjectsNames;
 	}
 	
 	public boolean acceptExtension (File dir) {
@@ -181,6 +174,20 @@ public class GeneralController {
 		return -1;
 	}
 	
+	public boolean generateFolders(String path)
+	{
+		File file = new File(path+ "\\" + "Materias");
+		
+		file.mkdir();
+		
+		for(int i = 0; i <= subjectsNames.size() -1; i++)
+		{
+			File mkdir = new File(path + "\\" + "Materias" + "\\" + subjectsNames.elementAt(i));
+			mkdir.mkdir();
+		}
+		
+		return true;
+	}
 	
 	
 }

@@ -36,9 +36,12 @@ public class SubjectSelector extends JFrame {
 	 * Create the frame.
 	 */
 	public SubjectSelector(final GeneralController GC) {
+		
+		this.setResizable(false);
+		
 		setTitle("EVIDENCIAS MARE VERUM || Agregar materias");
 		
-		ImageIcon EMV = new ImageIcon("EvidenciasMareVerum.png");
+		ImageIcon EMV = new ImageIcon("Images/EvidenciasMareVerum.png");
 		setIconImage(EMV.getImage());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
@@ -49,8 +52,8 @@ public class SubjectSelector extends JFrame {
 		contentPane.setLayout(null);
 		
 		JTextPane txtpnInThisSeccion = new JTextPane();
-		txtpnInThisSeccion.setFont(new Font("Cooper Black", Font.PLAIN, 20));
-		txtpnInThisSeccion.setText("\r\n\r\nEn esta secci\u00F3n, usted va a poder agregar sus materias. Escriba cada una de ellas separadas por c\u00F3mas.\r\n\r\nEjemplo: \r\n\r\nMatem\u00E1ticas, F\u00EDsica, Literatura, etcetera.");
+		txtpnInThisSeccion.setFont(new Font("Cooper Black", Font.PLAIN, 25));
+		txtpnInThisSeccion.setText("En esta secci\u00F3n, usted va a poder agregar sus materias. Escriba cada una de ellas separadas por comas.\r\n\r\nEjemplo: \r\n\r\nMatem\u00E1ticas, F\u00EDsica, Literatura, etc\u00E9tera.\r\n");
 		txtpnInThisSeccion.setBackground(new Color(169, 169, 169));
 		txtpnInThisSeccion.setForeground(new Color(0, 0, 0));
 		txtpnInThisSeccion.setEditable(false);
@@ -58,7 +61,8 @@ public class SubjectSelector extends JFrame {
 		contentPane.add(txtpnInThisSeccion);
 		
 		final JTextPane textPaneSubjets = new JTextPane();
-		textPaneSubjets.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+		textPaneSubjets.setToolTipText("Ingrese aqu\u00ED sus materias ");
+		textPaneSubjets.setFont(new Font("Cooper Black", Font.PLAIN, 30));
 		JScrollPane s = new JScrollPane();
 	    s.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    s.setBounds(10, 11, 270, 290);
@@ -66,7 +70,7 @@ public class SubjectSelector extends JFrame {
 	    s.setViewportView(textPaneSubjets);
 		
 		JButton addSubjetsButton = new JButton("Agregar Materias");
-		addSubjetsButton.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+		addSubjetsButton.setFont(new Font("Cooper Black", Font.PLAIN, 25));
 		addSubjetsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

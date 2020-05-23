@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Vector;
 
@@ -34,7 +35,7 @@ public class FileController {
 		subjects = new Vector<Subject>();
 	}
 	
-	public void newEvidence(Evidence evidence) {
+	public boolean newEvidence(Evidence evidence) {
 		
 		Vector<String>period = new Vector<String>();
 		period = evidence.getPeriod();
@@ -61,13 +62,19 @@ public class FileController {
 					XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
 					XSLFSlideLayout titleLayout = defaultMaster.getLayout(SlideLayout.TITLE);
 					XSLFSlide slide = ppt.createSlide(titleLayout);
+
+					
 					XSLFTextShape textContent = slide.getPlaceholder(0);
-					textContent.setText(subjects.elementAt(i));
+
+					textContent.setText(subjects.elementAt(i)).setFontSize(80.);
+					
+														//Horizontal, vertical, ancho, alto
+					
 					textContent.setAnchor(new Rectangle2D.Double(28.32* 3, 28.32* 9, 28.32 * 20, 28.32 * 3));
 					slide.removeShape(slide.getPlaceholder(1));
 					
 					
-					for(int j = 0; j<= 8; j++) {
+						for(int j = 0; j<= 8; j++) {
 						XSLFSlideLayout contentLayout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
 						XSLFSlide contentSlide = ppt.createSlide(contentLayout);
 						XSLFTextShape month = contentSlide.getPlaceholder(0);
@@ -83,12 +90,13 @@ public class FileController {
 					}
 				}
 				
-				ppt.setPageSize(new java.awt.Dimension(737, 624));
+				ppt.setPageSize(new java.awt.Dimension(737, 623));
 				
 				FileOutputStream out = new FileOutputStream(file);
 				ppt.write(out);
 				out.close();
-				
+				ppt.close();
+				return true;
 				
 			} 
 			catch(Exception e) {
@@ -97,24 +105,41 @@ public class FileController {
 			
 			
 		} else {
-			int input = JOptionPane.showConfirmDialog(null, "El archivo que esta tratando de crear ya existe, desea sobreescribirlo");
-			if (input == 0) {
+			
+			if (JOptionPane.showConfirmDialog(null, "El archivo que esta tratando de crear ya existe, ¿desea sobreescribirlo?","",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION ) {
 				try
 				{
+					
+					//remove all slides
+					
+					File fileDeleted = new File(evidence.getPath());
+
+					Files.deleteIfExists(fileDeleted.toPath());
+					
+					
 					ppt = new XMLSlideShow();
 					
+
+
+			
 					
 					for(int i = 0 ; i <=subjects.size()-1 ; i++) {
 						try {
 							
-						
-						XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
-						XSLFSlideLayout titleLayout = defaultMaster.getLayout(SlideLayout.TITLE);
-						XSLFSlide slide = ppt.createSlide(titleLayout);
-						XSLFTextShape textContent = slide.getPlaceholder(0);
-						textContent.setText(subjects.elementAt(i));
-						textContent.setAnchor(new Rectangle2D.Double(28.32*3, 28.32*9, 28.32 * 20, 28.32*3));
-						slide.removeShape(slide.getPlaceholder(1));
+							XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
+							XSLFSlideLayout titleLayout = defaultMaster.getLayout(SlideLayout.TITLE);
+							XSLFSlide slide = ppt.createSlide(titleLayout);
+
+							
+							XSLFTextShape textContent = slide.getPlaceholder(0);
+
+							textContent.setText(subjects.elementAt(i)).setFontSize(80.);
+							
+																//Horizontal, vertical, ancho, alto
+							
+							textContent.setAnchor(new Rectangle2D.Double(28.32* 3, 28.32* 9, 28.32 * 20, 28.32 * 3));
+							slide.removeShape(slide.getPlaceholder(1));
+							
 						
 						
 						for(int j = 0; j<= 8; j++) {
@@ -122,8 +147,9 @@ public class FileController {
 							XSLFSlide contentSlide = ppt.createSlide(contentLayout);
 							XSLFTextShape month = contentSlide.getPlaceholder(0);
 							month.setText(period.elementAt(j));
-							month.setAnchor(new Rectangle2D.Double( 28.32 * 1 , 28.32 * 0, 28.32 * 24, 28.32 * 2));
+							month.setAnchor(new Rectangle2D.Double( 28.32 * 0.94 , 28.32 * 0.42, 28.32 * 24, 28.32 * 2));
 							contentSlide.removeShape(contentSlide.getPlaceholder(1));
+
 						}
 						
 						
@@ -132,18 +158,25 @@ public class FileController {
 						}
 					}
 					
+					ppt.setPageSize(new java.awt.Dimension(737, 623));
+					
 					FileOutputStream out = new FileOutputStream(file);
 					ppt.write(out);
 					out.close();
+					
+					ppt.close();
+					
+					return true;
 					
 				} 
 				catch(Exception e) {
 					e.printStackTrace();
 				}
 			}else {
-				JOptionPane.showMessageDialog(null, "Ingrese un nombre diferente al archivo para continuar");
+				return false;
 			}
 		}
+		return false;
 		
 		
 		
@@ -182,12 +215,17 @@ public class FileController {
 				pictures.addAll(images);
 				System.out.println(images.isEmpty());
 				System.out.println(images.size());
+				subjectNames.removeAllElements();
+				subjects.removeAllElements();
 				
 				
 				for(int i = 0; i<= slides.size()-1; i++) {
 					XSLFSlide slide = slides.get(i);
 					
 					if(slide.getTitle() == null) {
+						
+
+						
 						XSLFTextShape titlePlaceHolder = slide.getPlaceholder(0);
 						subject = titlePlaceHolder.getText();
 						position = slide.getSlideNumber() - 1;
@@ -214,7 +252,7 @@ public class FileController {
 							Subject newSubject = new Subject(subject, position, monthPosition, subjectsPictures, period);
 							count = 0;
 							subjects.add(newSubject);
-							System.out.println("añadi el subject");
+
 							monthPosition.removeAllElements();
 							subjectsPictures.removeAllElements();
 							
@@ -314,26 +352,49 @@ public class FileController {
 			List<XSLFSlide> slides = ppt.getSlides();
 			XSLFSlide position = slides.get(index);
 			
+			//borrar para que no se pisen
+			String title = position.getTitle();
+			ppt.removeSlide(index);
+			
+			//recrear la slide
+			
+			XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
+			XSLFSlideLayout contentLayout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
+			XSLFSlide contentSlide = ppt.createSlide(contentLayout);
+			XSLFTextShape monthC = contentSlide.getPlaceholder(0);
+			monthC.setText(title);						//Horizontal, vertical, ancho, alto
+			monthC.setAnchor(new Rectangle2D.Double( 28.32 * 0.94 , 28.32 * 0.42, 28.32 * 24, 28.32 * 2));
+			contentSlide.removeShape(contentSlide.getPlaceholder(1));
+			
+			//añadirla donde va 
+			XSLFSlide slideChange = slides.get(slides.size() -1);
+			ppt.setSlideOrder(slideChange, index);
+			
+			//retomarla
+			XSLFSlide positionPick = slides.get(index);
+			
 			
 			byte[] pictureData0 = IOUtils.toByteArray(new FileInputStream(photoPath.elementAt(0)));
 			byte[] pictureData1 = IOUtils.toByteArray(new FileInputStream(photoPath.elementAt(1)));
 			byte[] pictureData2 = IOUtils.toByteArray(new FileInputStream(photoPath.elementAt(2)));
 			byte[] pictureData3 = IOUtils.toByteArray(new FileInputStream(photoPath.elementAt(3)));
 			
-			Rectangle2D rect = new Rectangle2D.Double( 28.32 * 0.3 , 28.32 * 3, 28.32 * 12.5, 28.32 * 9);
-			Rectangle2D rect1 = new Rectangle2D.Double( 28.32 * 13.2 , 28.32 * 3, 28.32 * 12.5, 28.32 * 9);
-			Rectangle2D rect2 = new Rectangle2D.Double( 28.32 * 0.3 , 28.32 * 12.5, 28.32 * 12.5, 28.32 * 9);
-			Rectangle2D rect3 = new Rectangle2D.Double( 28.32 * 13.2 , 28.32 * 12.5, 28.32 * 12.5, 28.32 * 9);
+														//Horizontal, vertical, ancho, alto
+			
+			Rectangle2D rect = new Rectangle2D.Double( 28.32 * 0 , 28.32 * 3, 28.32 * 13, 28.32 * 9.5);
+			Rectangle2D rect1 = new Rectangle2D.Double( 28.32 * 13 , 28.32 * 3, 28.32 * 13, 28.32 * 9.5);
+			Rectangle2D rect2 = new Rectangle2D.Double( 28.32 * 0 , 28.32 * 12.5, 28.32 * 13, 28.32 * 9.5);
+			Rectangle2D rect3 = new Rectangle2D.Double( 28.32 * 13 , 28.32 * 12.5, 28.32 * 13, 28.32 * 9.5);
 			
 			XSLFPictureData pd = ppt.addPicture(pictureData0, PictureData.PictureType.JPEG);
 			XSLFPictureData pd1 = ppt.addPicture(pictureData1, PictureData.PictureType.JPEG);
 			XSLFPictureData pd2 = ppt.addPicture(pictureData2, PictureData.PictureType.JPEG);
 			XSLFPictureData pd3 = ppt.addPicture(pictureData3, PictureData.PictureType.JPEG);
 			
-			XSLFPictureShape pic = position.createPicture(pd);
-			XSLFPictureShape pic1 = position.createPicture(pd1);
-			XSLFPictureShape pic2 = position.createPicture(pd2);
-			XSLFPictureShape pic3 = position.createPicture(pd3);
+			XSLFPictureShape pic = positionPick.createPicture(pd);
+			XSLFPictureShape pic1 = positionPick.createPicture(pd1);
+			XSLFPictureShape pic2 = positionPick.createPicture(pd2);
+			XSLFPictureShape pic3 = positionPick.createPicture(pd3);
 			
 			pic.setAnchor(rect);
 			pic1.setAnchor(rect1);
@@ -344,59 +405,14 @@ public class FileController {
 			FileOutputStream out = new FileOutputStream(file);
 			ppt.write(out);
 			out.close();
+			ppt.close();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	public void setImages(Subject changerSubjectPicture, String path) {
-		File file = new File((path));
-		
-		try {
-			ppt = new XMLSlideShow(new FileInputStream(file));
-			
-			
-			
-		
-		//	XSLFSlide position = slides.get(changerSubjectPicture.getMonthPositions());
-			
-			
-			byte[] pictureData0 = changerSubjectPicture.getPictures().get(0);
-			byte[] pictureData1 = changerSubjectPicture.getPictures().get(1);
-			byte[] pictureData2 = changerSubjectPicture.getPictures().get(2);
-			byte[] pictureData3 = changerSubjectPicture.getPictures().get(3);
-			
-			Rectangle2D rect = new Rectangle2D.Double( 28.32 * 0 , 28.32 * 3, 28.32 * 12, 28.32 * 9);
-			Rectangle2D rect1 = new Rectangle2D.Double( 28.32 * 14 , 28.32 * 3, 28.32 * 12, 28.32 * 9);
-			Rectangle2D rect2 = new Rectangle2D.Double( 28.32 * 0 , 28.32 * 13, 28.32 * 12, 28.32 * 9);
-			Rectangle2D rect3 = new Rectangle2D.Double( 28.32 * 14 , 28.32 * 13, 28.32 * 12, 28.32 * 9);
-			
-			XSLFPictureData pd = ppt.addPicture(pictureData0, PictureData.PictureType.JPEG);
-			XSLFPictureData pd1 = ppt.addPicture(pictureData1, PictureData.PictureType.JPEG);
-			XSLFPictureData pd2 = ppt.addPicture(pictureData2, PictureData.PictureType.JPEG);
-			XSLFPictureData pd3 = ppt.addPicture(pictureData3, PictureData.PictureType.JPEG);
-			
-			/*
-			XSLFPictureShape pic = position.createPicture(pd);
-			XSLFPictureShape pic1 = position.createPicture(pd1);
-			XSLFPictureShape pic2 = position.createPicture(pd2);
-			XSLFPictureShape pic3 = position.createPicture(pd3);
-			
-			pic.setAnchor(rect);
-			pic1.setAnchor(rect1);
-			pic2.setAnchor(rect2);
-			pic3.setAnchor(rect3);
-			
-			*/
-			FileOutputStream out = new FileOutputStream(file);
-			ppt.write(out);
-			out.close();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
 	
 	public Vector<byte[]> readImages(String path) {
 		images = new Vector<byte[]>();
@@ -406,7 +422,8 @@ public class FileController {
 			
 			
 			 for(XSLFPictureData data : ppt.getPictureData()) {					
-					 images.add(data.getData());
+					 
+				 		images.add(data.getData());
 				}
 			 
 			 
@@ -420,6 +437,61 @@ public class FileController {
 		return images;
 		
 	}
+	
+	
+	
+	public Vector<String> getNameSubjects(String path){
+		Vector<String> subjects = new Vector<String>();
+			File file = new File(path);
+			try {
+			ppt = new XMLSlideShow(new FileInputStream(file));
+				List<XSLFSlide> slides = ppt.getSlides();
+				
+				for(int i = 0; i <= slides.size()-1; i++) {
+					XSLFSlide selectSlide = slides.get(i);
+					if(selectSlide.getTitle() == null) {
+						XSLFTextShape text = selectSlide.getPlaceholder(0);
+						subjects.add(text.getText());
+					}
+				}
+				
+				ppt.close();
+			
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		
+		return subjects;
+	}
+
+	public Vector<String> getSubjects(String path){
+		Vector<String> subjects = new Vector<String>();
+			File file = new File(path);
+			try {
+			ppt = new XMLSlideShow(new FileInputStream(file));
+				List<XSLFSlide> slides = ppt.getSlides();
+				
+				for(int i = 0; i <= slides.size()-1; i++) {
+					XSLFSlide selectSlide = slides.get(i);
+					if(selectSlide.getTitle() == null) {
+						XSLFTextShape text = selectSlide.getPlaceholder(0);
+						subjects.add(text.getText());
+					}
+				}
+				
+				ppt.close();
+			
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		
+		return subjects;
+	}
+	
+	public Vector<Subject> exportSubjects(){
+		return subjects;
+	}
+	
 	
 	private void readSlideImage(Vector<byte[]> images, Vector<byte[]> subjectImages, int slideNumber) {
 		
@@ -505,151 +577,5 @@ public class FileController {
 	
 	}
 	
-	private void readTotalSlidesImages(Vector<byte[]> images, Vector<byte[]> subjectImages, int slideNumber) {
-		
-		int limit = slideNumber % 10;
-		
-		int maxImages = images.size();
-		
-		
-		if(limit == 0) {
-			
-			if(maxImages >= 35) {
-				for(int i = 0; i <= 35; i++) {
-					subjectImages.add(images.elementAt(i));
-				}
-			}else {
-				for(int i = 0; i <= 35; i++) {
-					if(i >= maxImages) {
-						subjectImages.add("null".getBytes());
-					}else {
-						subjectImages.add(images.elementAt(i));
-					}
-				}
-			}
-		}else if(limit == 1) { 
-			if(maxImages>=72) {
-				for(int i = 36; i<=72; i++) {
-					subjectImages.add(images.elementAt(i));
-				}
-			} else {
-				for(int i = 36; i<=72; i++) {
-					if(i >= maxImages) {
-						subjectImages.add("null".getBytes());
-					} else {
-						subjectImages.add(images.elementAt(i));
-					}
-				}
-			}
-			
-		
-		} else {
-			if(limit % 2 == 0) {
-				
-				int index = (36 * limit ) + 1;
-				if(maxImages>= index+36) {
-					for(int i = index; i<= index + 36; i++ ) {
-						subjectImages.add(images.elementAt(i));
-					}
-				} else {
-					
-					for(int i = index; i<= index + 36; i++ ) { 
-						if(i >= maxImages) {
-							subjectImages.add("null".getBytes());
-						} else {
-							subjectImages.add(images.elementAt(i));
-						}
-					}	
-				}
-				
-			}else {
-				
-				int index = (36 * limit ) + (limit - 1);
-				
-				if(maxImages>= index+36) {
-					for(int i = index; i<= index + 36; i++ ) {
-						subjectImages.add(images.elementAt(i));
-					}
-				} else {
-					
-					for(int i = index; i<= index + 36; i++ ) { 
-						if(i >= maxImages) {
-							subjectImages.add("null".getBytes());
-						} else {
-							subjectImages.add(images.elementAt(i));
-						}
-					}	
-				}
-				
-			}
-		}
-		
 	
-	
-	
-	}
-	
-	public Vector<String> getNameSubjects(String path){
-		Vector<String> subjects = new Vector<String>();
-			File file = new File(path);
-			try {
-			ppt = new XMLSlideShow(new FileInputStream(file));
-				List<XSLFSlide> slides = ppt.getSlides();
-				
-				for(int i = 0; i <= slides.size()-1; i++) {
-					XSLFSlide selectSlide = slides.get(i);
-					if(selectSlide.getTitle() == null) {
-						XSLFTextShape text = selectSlide.getPlaceholder(0);
-						subjects.add(text.getText());
-					}
-				}
-				
-				ppt.close();
-			
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-		
-		return subjects;
-	}
-
-	public Vector<String> getSubjects(String path){
-		Vector<String> subjects = new Vector<String>();
-			File file = new File(path);
-			try {
-			ppt = new XMLSlideShow(new FileInputStream(file));
-				List<XSLFSlide> slides = ppt.getSlides();
-				
-				for(int i = 0; i <= slides.size()-1; i++) {
-					XSLFSlide selectSlide = slides.get(i);
-					if(selectSlide.getTitle() == null) {
-						XSLFTextShape text = selectSlide.getPlaceholder(0);
-						subjects.add(text.getText());
-					}
-				}
-				
-				ppt.close();
-			
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-		
-		return subjects;
-	}
-	
-	public Vector<Subject> exportSubjects(){
-		return subjects;
-	}
-
-	public Subject getSubject(String Name)
-	{
-		for (int i = 0; i < subjects.size() - 1; i++)
-		{ 
-			if (subjects.elementAt(i).getName() == Name)
-			{
-				return subjects.elementAt(i);
-			}
-		}
-		return null;
-	}
 }	
