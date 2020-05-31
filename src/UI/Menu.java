@@ -143,8 +143,22 @@ public class Menu extends JFrame {
 			}
 		});
 		btnFolders.setFont(new Font("Cooper Black", Font.PLAIN, 20));
-		btnFolders.setBounds(157, 404, 465, 100);
+		btnFolders.setBounds(29, 404, 448, 100);
 		contentPane.add(btnFolders);
+		
+		JButton btnCrearCaratula = new JButton("CARATULA");
+		btnCrearCaratula.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				newHead head = new newHead(GC, frame);
+				head.setLocationRelativeTo(null);
+				dispose();
+				head.setVisible(true);
+			}
+		});
+		btnCrearCaratula.setForeground(Color.BLACK);
+		btnCrearCaratula.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+		btnCrearCaratula.setBounds(519, 404, 225, 100);
+		contentPane.add(btnCrearCaratula);
 		
 		JLabel lblVv = new JLabel("V 1.0");
 		lblVv.setBounds(748, 557, 46, 14);

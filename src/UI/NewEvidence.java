@@ -9,20 +9,15 @@ import Controller.GeneralController;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 
 import java.awt.Choice;
 
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.awt.event.ActionEvent;
 
@@ -40,7 +35,7 @@ public class NewEvidence extends JFrame {
 	private JPanel contentPane;
 	private JTextField nameField;
 	private File index;
-	private boolean flag;
+
 	private final Menu frame;
 
 
@@ -49,7 +44,6 @@ public class NewEvidence extends JFrame {
 	 */
 	public NewEvidence(final GeneralController GC, final Menu frame) {
 		
-		flag = false;
 		
 		this.frame = frame;
 		
@@ -79,60 +73,41 @@ public class NewEvidence extends JFrame {
 		nameField.setBounds(470, 27, 308, 41);
 		contentPane.add(nameField);
 		nameField.setColumns(10);
-		
-		JButton subjSelectorButton = new JButton("Seleccionar Materias");
-		subjSelectorButton.setBackground(new Color(255, 240, 245));
-		subjSelectorButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				flag = true;
-				SubjectSelector newSelector = new SubjectSelector(GC);
-				newSelector.setLocationRelativeTo(null);
-				newSelector.setVisible(true);
-				
-			}
-		});
-		subjSelectorButton.setFont(new Font("Cooper Black", Font.PLAIN, 25));
-		subjSelectorButton.setToolTipText("Las materias que conforman su Ciclo Lectivo");
-		subjSelectorButton.setBounds(20, 166, 300, 54);
-		contentPane.add(subjSelectorButton);
-		
-		
-		
-		JScrollPane s = new JScrollPane();
-	    s.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	    s.setBounds(330, 100, 448, 230);
-	    contentPane.add(s);
-	    final JList<String> subjects = new JList<String>(new DefaultListModel<String>());
-	    subjects.setForeground(Color.BLACK);
-	    s.setViewportView(subjects);
-	    subjects.setFont(new Font("Cooper Black", Font.PLAIN, 35));
-	    subjects.setToolTipText("Aqu\u00ED se muestran las materias Seleccionadas");
-	    
-	    addMouseListener(new MouseAdapter() {
-	    	public void mouseEntered(MouseEvent e) {
-	    		 ((DefaultListModel<String>) subjects.getModel()).removeAllElements();
-	    		 
-	    		 if(flag) 
-	    		 {
-	    			 for(int i = 0; i <= GC.getSubjectVector().size() - 1; i++)
-	    			 { 
-	    			
-	    				 ((DefaultListModel<String>) subjects.getModel()).addElement(GC.getSubjectVector().elementAt(i));
-	    			 }
-	    		}
-	    	}
-	    });
 	    
 	    JSeparator separator = new JSeparator();
 	    separator.setBounds(10, 82, 768, 7);
 	    contentPane.add(separator);
 	    
 	    final Choice periodSelector = new Choice();
-	    periodSelector.setFont(new Font("Cooper Black", Font.PLAIN, 30));
-	    periodSelector.setBounds(20, 237, 300, 30);
-	    periodSelector.add("Periodo");
+	    periodSelector.setFont(new Font("Cooper Black", Font.PLAIN, 29));
+	    periodSelector.setBounds(236, 259, 300, 40);
+	    periodSelector.add("Periodo...");
 	    periodSelector.add("Marzo - Noviembre");
 	    periodSelector.add("Agosto - Abril");
+	    
+	    Choice cyclesSelector = new Choice();
+	    cyclesSelector.setFont(new Font("Cooper Black", Font.PLAIN, 29));
+	    cyclesSelector.setBounds(236, 181, 300, 40);
+	    
+	    cyclesSelector.add("Ciclo...");
+	    cyclesSelector.add("Crianza 3");
+	    cyclesSelector.add("Crianza 4");
+	    cyclesSelector.add("Crianza 5");
+	    cyclesSelector.add("Gramática 1");
+	    cyclesSelector.add("Gramática 2");
+	    cyclesSelector.add("Gramática 3");
+	    cyclesSelector.add("Gramática 4");
+	    cyclesSelector.add("Gramática 5");
+	    cyclesSelector.add("Gramática 6");	    
+	    cyclesSelector.add("Lógica 1");
+	    cyclesSelector.add("Lógica 2");
+	    cyclesSelector.add("Lógica 3");
+	    cyclesSelector.add("Retórica 1");
+	    cyclesSelector.add("Retórica 2");
+	    cyclesSelector.add("Retórica 3");	 
+	    
+	    
+	    contentPane.add(cyclesSelector);
 	    contentPane.add(periodSelector);
 	  
 	    
@@ -190,11 +165,11 @@ public class NewEvidence extends JFrame {
 	    		{
 	    			JOptionPane.showMessageDialog(null, "Ingrese un nombre para su evidencia", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
 	    		}
-	    		else if(((DefaultListModel<String>) subjects.getModel()).isEmpty())
+	    		else if(cyclesSelector.getSelectedItem().equals("Ciclo..."))
 	    		{
-	    			JOptionPane.showMessageDialog(null, "Ingrese al menos una materia para continuar", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
+	    			JOptionPane.showMessageDialog(null, "Seleccione un ciclo valido para continuar", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
 	    		}
-	    		else if(periodSelector.getSelectedItem().equals("Periodo"))
+	    		else if(periodSelector.getSelectedItem().equals("Periodo..."))
 	    		{
 	    			JOptionPane.showMessageDialog(null, "Seleccione un periodo valido para continuar", "No es posible continuar", JOptionPane.ERROR_MESSAGE);
 	    		}
@@ -211,6 +186,8 @@ public class NewEvidence extends JFrame {
 	    		System.out.println(index.getAbsolutePath() + "\\" +  nameField.getText());
 	    		
 	    		String filePath = index.getAbsolutePath() + "\\" +  nameField.getText() + ".ppt";
+	    		
+	    		GC.updateSubjectsNamesVector(cyclesSelector.getSelectedItem());
 	    		
 	    		if (GC.newEvidence(periodSelector.getSelectedItem(), filePath))
 	    		{
@@ -244,7 +221,6 @@ public class NewEvidence extends JFrame {
 	    			}
 	    			
 	    			closeWind();
-		    		((DefaultListModel<String>) subjects.getModel()).removeAllElements();
 		    		
 	    		}
 	    		else
@@ -265,7 +241,6 @@ public class NewEvidence extends JFrame {
 	    	public void actionPerformed(ActionEvent e) {
 	    		
 	    		closeWind();
-	    		((DefaultListModel<String>) subjects.getModel()).removeAllElements();
 
 	    		
 	    	}
@@ -282,6 +257,12 @@ public class NewEvidence extends JFrame {
 				JLabel lblVv = new JLabel("V 1.0");
 				lblVv.setBounds(748, 557, 46, 14);
 				contentPane.add(lblVv);
+		
+		JLabel lblSeleccioneCicloY = new JLabel("SELECCIONE CICLO Y PERIODO");
+		lblSeleccioneCicloY.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSeleccioneCicloY.setFont(new Font("Cooper Black", Font.PLAIN, 30));
+		lblSeleccioneCicloY.setBounds(69, 119, 589, 37);
+		contentPane.add(lblSeleccioneCicloY);
 		labelWall.setIcon(wall);
 	    contentPane.add(labelWall);
 		
@@ -291,7 +272,5 @@ public class NewEvidence extends JFrame {
     private void closeWind() {
 		dispose();
 		frame.setVisible(true);
-		flag = false;
     }
-
 }

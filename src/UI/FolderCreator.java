@@ -139,7 +139,7 @@ public class FolderCreator extends JFrame {
 		
 		JButton btnBack = new JButton("< Volver");
 		btnBack.setToolTipText("Volver al menu principal");
-		btnBack.setFont(new Font("Century Gothic", Font.BOLD, 18));
+		btnBack.setFont(new Font("Cooper Black", Font.BOLD, 16));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

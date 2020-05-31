@@ -82,6 +82,13 @@ public class GeneralController {
 		
 	}
 	
+	// crea la caratula directamente en el documento, no hace falta guardarse el dato porque no se va a modificar, salvo que sea manualmente
+	
+	public void newHead(String student, String idNumber, byte[] picture, String subject, String year, String path) {
+		
+		fileController.newHead(student, idNumber, picture, subject, year, path);
+	}
+	
 	public void readEvidence(String path) 
 	
 	{
@@ -119,24 +126,84 @@ public class GeneralController {
 		return false;
 	}
 	
+	//cambiar funcion, para q las materias se agregen por años, no obteniendo los datos de una lista.
 	
-	public void getTextFromTP(String TP)	
+	public void updateSubjectsNamesVector(String TP)	
 	
 	{
 		subjectsNames = new Vector<String>();
+	
 		
-		String[] elements = TP.split(",");
-		
-		for(int i = 0; i <= elements.length -1; i++) 
+		if(TP.equals("Crianza 3") || TP.equals("Crianza 4")) 
 		{
-			elements[i]= elements[i].trim();
+			
+			subjectsNames.add("Arte, Música y Literatura");
+			subjectsNames.add("Naturaleza");
+			subjectsNames.add("Actividades Sensoriales");
+			subjectsNames.add("Motricidad");
+			subjectsNames.add("Educación Física");
+		}
+		else if(TP.equals("Crianza 5"))
+		{
+			subjectsNames.add("Arte, Música y Literatura");
+			subjectsNames.add("Naturaleza");
+			subjectsNames.add("Actividades Sensoriales");
+			subjectsNames.add("Motricidad");
+			subjectsNames.add("Educación Física");
+			subjectsNames.add("Habilidades Lógico-Matemáticas");
+			subjectsNames.add("Habilidades Lingüísticas");
+			
+		}
+		else if(TP.equals("Gramática 1") || TP.equals("Gramática 2") || TP.equals("Gramática 3"))
+		{
+			subjectsNames.add("Lenguaje");
+			subjectsNames.add("Conocimiento del Entorno Social");
+			subjectsNames.add("Conocimiento del Entorno Natural");
+			subjectsNames.add("Matemática");
+			subjectsNames.add("Apreciación del Arte");
+			subjectsNames.add("Bellas Artes");
+			subjectsNames.add("Educación Física");
 		}
 		
-		
-		
-		for(int i = 0; i <= elements.length -1; i++) 
+		else if(TP.equals("Gramática 4") || TP.equals("Gramática 5") || TP.equals("Gramática 6"))
 		{
-			subjectsNames.add(elements[i]);
+			subjectsNames.add("Lenguaje");
+			subjectsNames.add("Conocimiento del Entorno Social");
+			subjectsNames.add("Conocimiento del Entorno Natural");
+			subjectsNames.add("Matemática");
+			subjectsNames.add("Apreciación del Arte");
+			subjectsNames.add("Bellas Artes");
+			subjectsNames.add("Educación Física");
+			subjectsNames.add("Idioma");
+		}
+		
+		else if(TP.equals("Lógica 1") || TP.equals("Lógica 2") || TP.equals("Lógica 3"))
+		{
+			subjectsNames.add("Lenguaje");
+			subjectsNames.add("Filosofía");
+			subjectsNames.add("Lógica");
+			subjectsNames.add("Bellas artes");
+			subjectsNames.add("Historia");
+			subjectsNames.add("Geografía");
+			subjectsNames.add("Ciencias");
+			subjectsNames.add("Matemática");
+			subjectsNames.add("Idioma extranjero");
+			subjectsNames.add("Latín");
+			subjectsNames.add("Educación Física");
+		}
+		else if(TP.equals("Retórica 1") || TP.equals("Retórica 2") || TP.equals("Retórica 3")) 
+		{
+			subjectsNames.add("Lenguaje");
+			subjectsNames.add("Filosofía");
+			subjectsNames.add("Retórica");
+			subjectsNames.add("Bellas artes");
+			subjectsNames.add("Historia");
+			subjectsNames.add("Geografía");
+			subjectsNames.add("Ciencias");
+			subjectsNames.add("Matemática");
+			subjectsNames.add("Idioma extranjero");
+			subjectsNames.add("Latín");
+			subjectsNames.add("Educación Física");
 		}
 		
 		

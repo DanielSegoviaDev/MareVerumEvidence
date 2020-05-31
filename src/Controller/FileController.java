@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.poi.sl.usermodel.PictureData;
+import org.apache.poi.sl.usermodel.TextParagraph.TextAlign;
 import org.apache.poi.xslf.usermodel.SlideLayout;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFPictureData;
@@ -19,6 +20,9 @@ import org.apache.poi.xslf.usermodel.XSLFPictureShape;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFSlideLayout;
 import org.apache.poi.xslf.usermodel.XSLFSlideMaster;
+import org.apache.poi.xslf.usermodel.XSLFTextBox;
+import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
+import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
 
 import Model.Evidence;
@@ -74,7 +78,8 @@ public class FileController {
 					slide.removeShape(slide.getPlaceholder(1));
 					
 					
-						for(int j = 0; j<= 8; j++) {
+						for(int j = 0; j<= 8; j++)
+						{
 						XSLFSlideLayout contentLayout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
 						XSLFSlide contentSlide = ppt.createSlide(contentLayout);
 						XSLFTextShape month = contentSlide.getPlaceholder(0);
@@ -82,7 +87,7 @@ public class FileController {
 						month.setAnchor(new Rectangle2D.Double( 28.32 * 0.94 , 28.32 * 0.42, 28.32 * 24, 28.32 * 2));
 						contentSlide.removeShape(contentSlide.getPlaceholder(1));
 
-					}
+						}
 					
 					
 					}catch(Exception e) {
@@ -90,6 +95,17 @@ public class FileController {
 					}
 				}
 				
+				//anexo de fotos
+				
+				XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
+				XSLFSlideLayout contentLayout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
+				XSLFSlide contentSlide = ppt.createSlide(contentLayout);
+				XSLFTextShape anexo  = contentSlide.getPlaceholder(0);
+				anexo.setText("ANEXO FOTOGRÁFICO");
+				anexo.setAnchor(new Rectangle2D.Double( 28.32 * 0.94 , 28.32 * 0.42, 28.32 * 24, 28.32 * 2));
+				contentSlide.removeShape(contentSlide.getPlaceholder(1));
+				
+				//tamaño de diapositiva 28 x 22
 				ppt.setPageSize(new java.awt.Dimension(737, 623));
 				
 				FileOutputStream out = new FileOutputStream(file);
@@ -158,6 +174,18 @@ public class FileController {
 						}
 					}
 					
+					//anexo de fotos
+					
+					XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
+					XSLFSlideLayout contentLayout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
+					XSLFSlide contentSlide = ppt.createSlide(contentLayout);
+					XSLFTextShape anexo  = contentSlide.getPlaceholder(0);
+					anexo.setText("ANEXO FOTOGRÁFICO");
+					anexo.setAnchor(new Rectangle2D.Double( 28.32 * 0.94 , 28.32 * 0.42, 28.32 * 24, 28.32 * 2));
+					contentSlide.removeShape(contentSlide.getPlaceholder(1));
+					
+					//tamaño de diapositiva 28 x 22
+					
 					ppt.setPageSize(new java.awt.Dimension(737, 623));
 					
 					FileOutputStream out = new FileOutputStream(file);
@@ -184,6 +212,128 @@ public class FileController {
 		
 	}
 	
+
+	
+	public void newHead(String student, String idNumber, byte[] picture, String subject, String year, String path) {
+		
+		File file = new File(path);
+		
+		try 
+		{
+			ppt = new XMLSlideShow(new FileInputStream(file));
+		
+			List<XSLFSlide> slides = ppt.getSlides();
+			
+			if(slides.get(0).getTitle() != null) {
+				ppt.removeSlide(0);
+				
+				//nombre alumno
+				XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
+				XSLFSlideLayout contentLayout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
+				XSLFSlide contentSlide = ppt.createSlide(contentLayout);
+				XSLFTextShape anexo  = contentSlide.getPlaceholder(0);
+				anexo.setText(student);					//Horizontal, vertical, ancho, alto
+				anexo.setAnchor(new Rectangle2D.Double( 28.32 * 0.7 , 28.32 * 0.41, 28.32 * 24, 28.32 * 2));
+				contentSlide.removeShape(contentSlide.getPlaceholder(1));
+				
+				//Id del alumno
+				XSLFTextBox idBox = contentSlide.createTextBox();
+				XSLFTextParagraph idTextP = idBox.addNewTextParagraph();
+				idTextP.setTextAlign(TextAlign.CENTER);
+				idBox.setAnchor(new Rectangle2D.Double( 28.32 * 0.7 , 28.32 * 2.52, 28.32 * 24, 28.32 * 2));
+				XSLFTextRun idText = idTextP.addNewTextRun();
+				idText.setText(idNumber);
+				idText.setFontSize(40.0);
+				
+				//añadimos foto del alumno
+				Rectangle2D picSize = new Rectangle2D.Double( 28.32 * 2.7 , 28.32 * 5.03, 28.32 * 20, 28.32 * 13);
+				XSLFPictureData pd = ppt.addPicture(picture, PictureData.PictureType.JPEG);
+				XSLFPictureShape pic = contentSlide.createPicture(pd);
+				pic.setAnchor(picSize);
+				
+				//Materia
+				XSLFTextBox idBox1 = contentSlide.createTextBox();
+				XSLFTextParagraph idTextP1 = idBox1.addNewTextParagraph();
+				idTextP1.setTextAlign(TextAlign.CENTER);
+				idBox1.setAnchor(new Rectangle2D.Double( 28.32 * 0.7 , 28.32 * 18.19, 28.32 * 24, 28.32 * 2));
+				XSLFTextRun idText1 = idTextP1.addNewTextRun();
+				idText1.setText(subject);
+				idText1.setFontSize(40.0);
+				
+				//año cursado
+				XSLFTextBox idBox2 = contentSlide.createTextBox();
+				XSLFTextParagraph idTextP2 = idBox2.addNewTextParagraph();
+				idTextP2.setTextAlign(TextAlign.CENTER);
+				idBox2.setAnchor(new Rectangle2D.Double( 28.32 * 0.7 , 28.32 * 19.88, 28.32 * 24, 28.32 * 2));
+				XSLFTextRun idText2 = idTextP2.addNewTextRun();
+				idText2.setText(year);
+				idText2.setFontSize(30.0);
+				
+				ppt.setSlideOrder(contentSlide, 0);
+			} 
+			else 
+			{	
+				
+				
+				//nombre alumno
+				XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
+				XSLFSlideLayout contentLayout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
+				XSLFSlide contentSlide = ppt.createSlide(contentLayout);
+				XSLFTextShape anexo  = contentSlide.getPlaceholder(0);
+				anexo.setText(student);					//Horizontal, vertical, ancho, alto
+				anexo.setAnchor(new Rectangle2D.Double( 28.32 * 0.7 , 28.32 * 0.41, 28.32 * 24, 28.32 * 2));
+				contentSlide.removeShape(contentSlide.getPlaceholder(1));
+				
+				//Id del alumno
+				XSLFTextBox idBox = contentSlide.createTextBox();
+				XSLFTextParagraph idTextP = idBox.addNewTextParagraph();
+				idTextP.setTextAlign(TextAlign.CENTER);
+				idBox.setAnchor(new Rectangle2D.Double( 28.32 * 0.7 , 28.32 * 2.52, 28.32 * 24, 28.32 * 2));
+				XSLFTextRun idText = idTextP.addNewTextRun();
+				idText.setText(idNumber);
+				idText.setFontSize(40.0);
+				
+				//añadimos foto del alumno
+				Rectangle2D picSize = new Rectangle2D.Double( 28.32 * 2.7 , 28.32 * 5.03, 28.32 * 20, 28.32 * 13);
+				XSLFPictureData pd = ppt.addPicture(picture, PictureData.PictureType.JPEG);
+				XSLFPictureShape pic = contentSlide.createPicture(pd);
+				pic.setAnchor(picSize);
+				
+				//Materia
+				XSLFTextBox idBox1 = contentSlide.createTextBox();
+				XSLFTextParagraph idTextP1 = idBox1.addNewTextParagraph();
+				idTextP1.setTextAlign(TextAlign.CENTER);
+				idBox1.setAnchor(new Rectangle2D.Double( 28.32 * 0.7 , 28.32 * 18.19, 28.32 * 24, 28.32 * 2));
+				XSLFTextRun idText1 = idTextP1.addNewTextRun();
+				idText1.setText(subject);
+				idText1.setFontSize(40.0);
+				
+				//año cursado
+				XSLFTextBox idBox2 = contentSlide.createTextBox();
+				XSLFTextParagraph idTextP2 = idBox2.addNewTextParagraph();
+				idTextP2.setTextAlign(TextAlign.CENTER);
+				idBox2.setAnchor(new Rectangle2D.Double( 28.32 * 0.7 , 28.32 * 19.88, 28.32 * 24, 28.32 * 2));
+				XSLFTextRun idText2 = idTextP2.addNewTextRun();
+				idText2.setText(year);
+				idText2.setFontSize(30.0);
+			
+				ppt.setSlideOrder(contentSlide, 0);
+			}
+			
+			FileOutputStream out = new FileOutputStream(file);
+			ppt.write(out);
+			out.close();
+			ppt.close();
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	public boolean ReadEvidence(String path) 
 	{
 		
@@ -194,6 +344,8 @@ public class FileController {
 		Vector<byte[]> pictures = new Vector<byte[]>();
 		Vector<byte[]> subjectsPictures = new Vector<byte[]>();
 		Vector<String> subjectNames = new Vector<String>();
+		
+		int counter = 1;
 
 		
 		String period = "";
@@ -218,8 +370,10 @@ public class FileController {
 				subjectNames.removeAllElements();
 				subjects.removeAllElements();
 				
+				int forSentenceIndex = detectAnnexed(slides);
 				
-				for(int i = 0; i<= slides.size()-1; i++) {
+				
+				for(int i = 0; i<= forSentenceIndex; i++) {
 					XSLFSlide slide = slides.get(i);
 					
 					if(slide.getTitle() == null) {
@@ -231,33 +385,69 @@ public class FileController {
 						position = slide.getSlideNumber() - 1;
 						subjectNames.add(subject);
 						count+=1;
-					} else {
+					} 
+					
+					else 
+					
+					{
+						if(i == 0) {
+							
+							counter = 2;
+							count++;
+						}
+						else
+						
+						{
 	
 						monthPosition.add(slide.getSlideNumber() - 1);
 						readSlideImage(pictures, subjectsPictures, slide.getSlideNumber());
+						//1
+							if( i ==  counter ) 	
+							{
+								
+								if(counter == 1)
+									counter = 10;
+								else
+									counter =11; 
+								
+								if(slide.getTitle().equals("Marzo")) 
+								{
+								
+									period = "Marzo - Noviembre";
 						
-						if( i ==  1 ) {
-							if(slide.getTitle().equals("Marzo")) {
-								period = "Marzo - Noviembre";
+								} 
+								
+								else 
+								
+								{
+									period = " ";
+								}
+
+							}
 						
-							} else {
-								period = " ";
+							count+=1;
+						
+							//10
+							if (count == counter) {
+							
+								Subject newSubject = new Subject(subject, position, monthPosition, subjectsPictures, period);
+								
+								subjects.add(newSubject);
+								
+								if (counter == 11) {
+									count = 1;
+								}
+								else 
+								{
+									count = 0;
+								}
+								
+								monthPosition.removeAllElements();
+								subjectsPictures.removeAllElements();
+							
 							}
 						}
-						
-						count+=1;
-						
-						if (count == 10) {
-							
-							Subject newSubject = new Subject(subject, position, monthPosition, subjectsPictures, period);
-							count = 0;
-							subjects.add(newSubject);
-
-							monthPosition.removeAllElements();
-							subjectsPictures.removeAllElements();
-							
-						}
-					 }
+					}
 					
 				}
 
@@ -492,6 +682,18 @@ public class FileController {
 		return subjects;
 	}
 	
+	private int detectAnnexed(List<XSLFSlide> slides)
+	{
+		for(int i = 0; i < slides.size(); i++)
+		{
+			XSLFSlide slide = slides.get(i);
+			if(slide.getTitle() != null && slide.getTitle().equals("ANEXO FOTOGRÁFICO")) {
+				return i;
+			}
+		}
+		
+		return slides.size()-1;
+	}
 	
 	private void readSlideImage(Vector<byte[]> images, Vector<byte[]> subjectImages, int slideNumber) {
 		

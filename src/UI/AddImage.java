@@ -72,24 +72,24 @@ public class AddImage extends JFrame {
 		
 		final Choice subjectChoice = new Choice();
 		subjectChoice.setFont(new Font("Cooper Black", Font.PLAIN, 25));
-		subjectChoice.setBounds(94, 96, 240, 30);
+		subjectChoice.setBounds(20, 96, 442, 35);
 		contentPane.add(subjectChoice);
 		
 		JLabel lblMateria = new JLabel("MATERIA");
 		lblMateria.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMateria.setFont(new Font("Cooper Black", Font.PLAIN, 25));
-		lblMateria.setBounds(340, 87, 145, 44);
+		lblMateria.setBounds(468, 87, 145, 44);
 		contentPane.add(lblMateria);
 		
 		final Choice monthChoice = new Choice();
 		monthChoice.setFont(new Font("Cooper Black", Font.PLAIN, 25));
-		monthChoice.setBounds(552, 96, 193, 20);
+		monthChoice.setBounds(654, 96, 193, 20);
 		contentPane.add(monthChoice);
 		
 		JLabel lblMes = new JLabel("MES");
 		lblMes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMes.setFont(new Font("Cooper Black", Font.PLAIN, 25));
-		lblMes.setBounds(751, 87, 90, 44);
+		lblMes.setBounds(853, 87, 90, 44);
 		contentPane.add(lblMes);
 		
 		
